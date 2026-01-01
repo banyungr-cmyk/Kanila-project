@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Jurnal Reflektif & Aksara</title>
+    <title>Kanila | Jurnal Reflektif</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
@@ -36,22 +36,28 @@
         h1 { letter-spacing: 5px; text-transform: uppercase; font-weight: normal; }
         
         nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        nav a { text-decoration: none; color: var(--text-color); font-family: sans-serif; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        nav a { text-decoration: none; color: var(--text-color); font-family: sans-serif; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
 
-        /* Tampilan Artikel */
-        .post-card { 
-            padding: 40px 0; 
-            border-bottom: 1px solid var(--border-color);
+        .post-card { padding: 30px 0; border-bottom: 1px solid var(--border-color); }
+        .post-card h3 { margin: 0 0 10px 0; color: var(--accent-color); font-size: 1.5rem; text-transform: capitalize; }
+        .post-meta { font-family: sans-serif; font-size: 0.8rem; opacity: 0.6; margin-bottom: 10px; display: block; }
+        
+        .read-btn { 
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            background-color: var(--accent-color);
+            color: white !important;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+            border-radius: 4px;
         }
-        .post-card h3 { margin: 0 0 15px 0; color: var(--accent-color); font-size: 1.6rem; }
-        .post-content { font-size: 1.15rem; line-height: 2; }
-        .post-content p { margin-bottom: 1.5rem; }
 
         button { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 15px; cursor: pointer; font-family: sans-serif; }
         blockquote { font-style: italic; text-align: center; padding: 40px; margin: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); opacity: 0.8; }
-        footer { margin-top: 100px; text-align: center; font-size: 0.8rem; opacity: 0.5; font-family: sans-serif; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        footer { margin-top: 100px; text-align: center; font-size: 0.9rem; opacity: 0.7; font-family: sans-serif; border-top: 1px solid var(--border-color); padding-top: 20px; }
         
-        /* Focus state for Accessibility */
         a:focus, button:focus { outline: 3px solid var(--accent-color); outline-offset: 5px; }
     </style>
 </head>
@@ -70,7 +76,7 @@
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#celoteh">Celoteh</a></li>
                 <li><a href="#aksara">Antologi Aksara</a></li>
-                <li><a href="/admin">Admin</a></li>
+                <li><a href="#kontak">Kontak</a></li>
             </ul>
         </nav>
     </header>
@@ -81,66 +87,71 @@
             <p>Seorang penulis yang mencintai organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis.</p>
         </section>
 
-        <blockquote>"Ada hal-hal yang hanya bisa dimengerti ketika kita berhenti bicara dan mulai menulis."</blockquote>
+        <blockquote aria-label="Kutipan">"Ada hal-hal yang hanya bisa dimengerti ketika kita berhenti bicara dan mulai menulis."</blockquote>
 
         <section id="celoteh">
             <h2>Celoteh</h2>
-            <div id="opini-container"> <p>Mencari arsip Celoteh...</p> </div>
+            <div id="opini-container"> <p>Menunggu arsip diunggah...</p> </div>
         </section>
 
         <section id="aksara">
             <h2>Antologi Aksara</h2>
-            <div id="puisi-container"> <p>Menyusun baris Aksara...</p> </div>
+            <div id="puisi-container"> <p>Menunggu aksara terukir...</p> </div>
+        </section>
+
+        <section id="kontak">
+            <h2>Kontak</h2>
+            <p>Mari berdiskusi lebih dalam melalui email: <a href="mailto:banyunugraha80@gmail.com">banyunugraha80@gmail.com</a></p>
         </section>
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2026 Kanila | Aksesibilitas WCAG 2.1 | Didukung oleh Marked.js</p>
+        <p>&copy; 2026 banyu Kanila and Kartunet.com</p>
     </footer>
 
     <script>
-        // Toggle Mode Gelap
         document.getElementById("dark-toggle").addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
         });
 
-        // FUNGSI UTAMA: Mengambil konten dari GitHub secara akurat
         async function loadPosts(folder, containerId) {
             const container = document.getElementById(containerId);
-            // OTOMATIS mendeteksi username dan repo dari URL (sangat aman)
-            const pathArray = window.location.pathname.split('/');
-            const repoName = "kanila project"; // Ganti ini JIKA nama repo Anda bukan 'kanila'
-            const userName = "BanyuNugraha"; // Ganti ini JIKA username Anda bukan 'BanyuNugraha'
+            const userName = "BanyuNugraha";
+            const repoName = "kanila"; 
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${userName}/${repoName}/contents/${folder}`);
-                if (!res.ok) throw new Error("Folder tidak ditemukan");
+                if (!res.ok) throw new Error("Kosong");
                 const files = await res.json();
                 
                 if (files.length > 0) {
                     container.innerHTML = "";
-                    // Ambil 5 tulisan terbaru
-                    const mdFiles = files.filter(f => f.name.endsWith('.md')).reverse();
+                    const validFiles = files.filter(f => 
+                        f.name.endsWith('.md') || 
+                        f.name.endsWith('.docx') || 
+                        f.name.endsWith('.txt')
+                    ).reverse();
                     
-                    for (let file of mdFiles) {
-                        const contentRes = await fetch(file.download_url);
-                        let text = await contentRes.text();
-                        
-                        // Menghapus Frontmatter (Metadata YAML di atas postingan)
-                        const cleanMarkdown = text.replace(/^---[\s\S]*?---/m, '').trim();
-                        const title = file.name.replace('.md', '').replace(/-/g, ' ');
-
+                    for (let file of validFiles) {
+                        const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
                         const article = document.createElement('article');
                         article.className = 'post-card';
+                        
+                        let actionText = "Baca Tulisan";
+                        if (file.name.endsWith('.docx')) actionText = "Unduh/Buka Dokumen (.docx)";
+
                         article.innerHTML = `
+                            <span class="post-meta">Format: ${file.name.split('.').pop().toUpperCase()}</span>
                             <h3>${title}</h3>
-                            <div class="post-content">${marked.parse(cleanMarkdown)}</div>
+                            <a href="${file.html_url}" target="_blank" class="read-btn">
+                                ${actionText} <span class="sr-only">tentang ${title}</span>
+                            </a>
                         `;
                         container.appendChild(article);
                     }
-                } else { container.innerHTML = "<p>Arsip belum tersedia.</p>"; }
-            } catch (e) { 
-                container.innerHTML = "<p>Belum ada postingan di sini. Silakan buat melalui halaman Admin.</p>"; 
+                }
+            } catch (e) {
+                // Biarkan teks default
             }
         }
 
