@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Jurnal Reflektif</title>
+    <title>Kanila | Jurnal Reflektif & Aksara</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         :root {
@@ -18,7 +19,6 @@
             --accent-color: #ff6b6b;
             --border-color: rgba(255,255,255,0.1);
         }
-        /* WCAG: Skip Link */
         .skip-link { position: absolute; top: -100px; left: 0; background: var(--accent-color); color: white; padding: 10px; z-index: 1000; }
         .skip-link:focus { top: 0; }
 
@@ -40,32 +40,31 @@
 
         /* Tampilan Artikel */
         .post-card { 
-            padding: 25px 0; 
+            padding: 40px 0; 
             border-bottom: 1px solid var(--border-color);
-            animation: fadeIn 1s;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .post-card h3 { margin: 0 0 10px 0; color: var(--accent-color); }
-        .post-content { font-size: 1.1rem; line-height: 1.9; }
+        .post-card h3 { margin: 0 0 15px 0; color: var(--accent-color); font-size: 1.6rem; }
+        .post-content { font-size: 1.15rem; line-height: 2; }
+        .post-content p { margin-bottom: 1.5rem; }
 
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-        
         button { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 15px; cursor: pointer; font-family: sans-serif; }
         blockquote { font-style: italic; text-align: center; padding: 40px; margin: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); opacity: 0.8; }
-        footer { margin-top: 100px; text-align: center; font-size: 0.8rem; opacity: 0.5; font-family: sans-serif; }
+        footer { margin-top: 100px; text-align: center; font-size: 0.8rem; opacity: 0.5; font-family: sans-serif; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        
+        /* Focus state for Accessibility */
+        a:focus, button:focus { outline: 3px solid var(--accent-color); outline-offset: 5px; }
     </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
 
     <div style="text-align: right; margin-bottom: 20px;">
-        <button id="dark-toggle" aria-label="Ganti Mode Gelap/Terang">Cahaya / Gelap</button>
+        <button id="dark-toggle" aria-label="Ganti Mode Gelap/Terang">Mode Cahaya / Gelap</button>
     </div>
 
     <header role="banner">
         <h1>KANILA</h1>
-        <p><em>"Menulis untuk merawat ingatan."</em></p>
+        <p><em>"Mengabadikan sunyi melalui aksara reflektif."</em></p>
         <nav role="navigation" aria-label="Menu Utama">
             <ul>
                 <li><a href="#tentang">Tentang</a></li>
@@ -82,7 +81,7 @@
             <p>Seorang penulis yang mencintai organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis.</p>
         </section>
 
-        <blockquote aria-label="Kutipan">"Sesuatu yang dituliskan tidak akan pernah benar-benar hilang."</blockquote>
+        <blockquote>"Ada hal-hal yang hanya bisa dimengerti ketika kita berhenti bicara dan mulai menulis."</blockquote>
 
         <section id="celoteh">
             <h2>Celoteh</h2>
@@ -96,7 +95,7 @@
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2026 Kanila | Aksesibilitas WCAG 2.1</p>
+        <p>&copy; 2026 Kanila | Aksesibilitas WCAG 2.1 | Didukung oleh Marked.js</p>
     </footer>
 
     <script>
@@ -105,36 +104,44 @@
             document.body.classList.toggle("dark-mode");
         });
 
-        // Fungsi Mengambil Tulisan dari GitHub
+        // FUNGSI UTAMA: Mengambil konten dari GitHub secara akurat
         async function loadPosts(folder, containerId) {
             const container = document.getElementById(containerId);
+            // OTOMATIS mendeteksi username dan repo dari URL (sangat aman)
+            const pathArray = window.location.pathname.split('/');
+            const repoName = "kanila project"; // Ganti ini JIKA nama repo Anda bukan 'kanila'
+            const userName = "BanyuNugraha"; // Ganti ini JIKA username Anda bukan 'BanyuNugraha'
+
             try {
-                // GANTI 'BanyuNugraha' dengan username GitHub Anda yang sebenarnya jika berbeda
-                const res = await fetch(`https://api.github.com/repos/BanyuNugraha/website-portofolio/contents/${folder}`);
+                const res = await fetch(`https://api.github.com/repos/${userName}/${repoName}/contents/${folder}`);
+                if (!res.ok) throw new Error("Folder tidak ditemukan");
                 const files = await res.json();
                 
                 if (files.length > 0) {
                     container.innerHTML = "";
-                    for (let file of files) {
-                        if (file.name.endsWith('.md')) {
-                            const contentRes = await fetch(file.download_url);
-                            const text = await contentRes.text();
-                            
-                            // Membersihkan format metadata Markdown sederhana
-                            const cleanText = text.replace(/---[\s\S]*?---/, '').trim();
-                            const title = file.name.replace('.md', '').replace(/-/g, ' ');
+                    // Ambil 5 tulisan terbaru
+                    const mdFiles = files.filter(f => f.name.endsWith('.md')).reverse();
+                    
+                    for (let file of mdFiles) {
+                        const contentRes = await fetch(file.download_url);
+                        let text = await contentRes.text();
+                        
+                        // Menghapus Frontmatter (Metadata YAML di atas postingan)
+                        const cleanMarkdown = text.replace(/^---[\s\S]*?---/m, '').trim();
+                        const title = file.name.replace('.md', '').replace(/-/g, ' ');
 
-                            const article = document.createElement('article');
-                            article.className = 'post-card';
-                            article.innerHTML = `
-                                <h3>${title}</h3>
-                                <div class="post-content">${cleanText}</div>
-                            `;
-                            container.appendChild(article);
-                        }
+                        const article = document.createElement('article');
+                        article.className = 'post-card';
+                        article.innerHTML = `
+                            <h3>${title}</h3>
+                            <div class="post-content">${marked.parse(cleanMarkdown)}</div>
+                        `;
+                        container.appendChild(article);
                     }
                 } else { container.innerHTML = "<p>Arsip belum tersedia.</p>"; }
-            } catch (e) { container.innerHTML = "<p>Folder tidak ditemukan. Pastikan Anda sudah memposting lewat admin.</p>"; }
+            } catch (e) { 
+                container.innerHTML = "<p>Belum ada postingan di sini. Silakan buat melalui halaman Admin.</p>"; 
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
