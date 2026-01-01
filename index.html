@@ -109,67 +109,69 @@
     <footer role="contentinfo">
         <p>&copy; 2026 banyu Kanila and Kartunet.com</p>
     </footer>
+<script>
+    document.getElementById("dark-toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
 
-    <script>
-        document.getElementById("dark-toggle").addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
+    async function loadPosts(folder, containerId) {
+        const container = document.getElementById(containerId);
+        
+        // Data presisi berdasarkan info Anda
+        const user = "banyungr-cmyk";
+        const repo = "Kanila-project";
 
-        async function loadPosts(folder, containerId) {
-            const container = document.getElementById(containerId);
+        try {
+            // Menggunakan API resmi GitHub dengan headers standar
+            const url = `https://api.github.com/repos/${user}/${repo}/contents/${folder}`;
+            const res = await fetch(url, {
+                headers: { 'Accept': 'application/vnd.github.v3+json' }
+            });
             
-            // DATA REPO YANG SUDAH DIVERIFIKASI
-            const user = "banyungr-cmyk";
-            const repo = "Kanila-project";
+            if (!res.ok) throw new Error("Folder tidak ditemukan");
+            const files = await res.json();
+            
+            // Filter file (mengabaikan file sistem seperti .gitkeep)
+            const validFiles = files.filter(f => 
+                !f.name.startsWith('.') && 
+                (f.name.toLowerCase().endsWith('.md') || 
+                 f.name.toLowerCase().endsWith('.docx') || 
+                 f.name.toLowerCase().endsWith('.txt'))
+            ).reverse();
+            
+            if (validFiles.length > 0) {
+                container.innerHTML = "";
+                for (let file of validFiles) {
+                    const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
+                    const ext = file.name.split('.').pop().toUpperCase();
+                    const article = document.createElement('article');
+                    article.className = 'post-card';
+                    
+                    let btnLabel = "Baca Tulisan";
+                    if (ext === 'DOCX') btnLabel = "Buka Dokumen Word";
 
-            try {
-                // Menambahkan timestamp agar data selalu segar (anti-cache)
-                const url = `https://api.github.com/repos/${user}/${repo}/contents/${folder}?t=${new Date().getTime()}`;
-                const res = await fetch(url);
-                
-                if (!res.ok) throw new Error("Folder tidak ditemukan");
-                const files = await res.json();
-                
-                // Menyaring file dokumen (.md, .docx, .txt)
-                const validFiles = files.filter(f => 
-                    f.name.toLowerCase().endsWith('.md') || 
-                    f.name.toLowerCase().endsWith('.docx') || 
-                    f.name.toLowerCase().endsWith('.txt')
-                ).reverse();
-                
-                if (validFiles.length > 0) {
-                    container.innerHTML = "";
-                    for (let file of validFiles) {
-                        // Menghilangkan ekstensi untuk judul yang bersih
-                        const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
-                        const ext = file.name.split('.').pop().toUpperCase();
-                        const article = document.createElement('article');
-                        article.className = 'post-card';
-                        
-                        let btnLabel = "Baca Tulisan";
-                        if (ext === 'DOCX') btnLabel = "Buka Dokumen Word";
-
-                        article.innerHTML = `
-                            <span class="post-meta">Format Dokumen: ${ext}</span>
-                            <h3>${title}</h3>
-                            <a href="${file.html_url}" target="_blank" class="read-btn">
-                                ${btnLabel} <span class="sr-only">tentang ${title}</span>
-                            </a>
-                        `;
-                        container.appendChild(article);
-                    }
-                } else {
-                    container.innerHTML = "<p>Folder ditemukan, namun belum ada dokumen di dalamnya.</p>";
+                    article.innerHTML = `
+                        <span class="post-meta">Format Dokumen: ${ext}</span>
+                        <h3>${title}</h3>
+                        <a href="${file.html_url}" target="_blank" class="read-btn">
+                            ${btnLabel} <span class="sr-only">tentang ${title}</span>
+                        </a>
+                    `;
+                    container.appendChild(article);
                 }
-            } catch (e) {
-                container.innerHTML = "<p>Menunggu dokumen diunggah ke folder " + folder + "...</p>";
+            } else {
+                container.innerHTML = "<p>Arsip belum tersedia di folder " + folder + ".</p>";
             }
+        } catch (e) {
+            console.error("Kesalahan API:", e);
+            container.innerHTML = "<p>Menunggu dokumen diunggah ke folder " + folder + "...</p>";
         }
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadPosts('_opini', 'opini-container');
-            loadPosts('_puisi', 'puisi-container');
-        });
+    window.addEventListener('DOMContentLoaded', () => {
+        loadPosts('_opini', 'opini-container');
+        loadPosts('_puisi', 'puisi-container');
+            });
     </script>
 </body>
 </html>
