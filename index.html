@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Portofolio Penulis & Pemikiran Kritis</title>
+    <title>Kanila | Jurnal Reflektif & Pemikiran Kritis</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
-        /* Variabel Warna untuk Mode Terang & Gelap */
         :root {
-            --bg-color: #ffffff;
+            --bg-color: #fdfaf6;
             --text-color: #1a1a1a;
-            --accent-color: #8b0000;
-            --link-color: #0056b3;
-            --border-color: #1a1a1a;
-            --card-bg: #f9f9f9;
+            --accent-color: #722f37; /* Wine Red untuk kesan melankolis */
+            --link-color: #0044cc;
+            --border-color: rgba(0,0,0,0.1);
         }
 
-        /* Skema Warna Gelap */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #121212;
-                --text-color: #e0e0e0;
-                --accent-color: #ff4d4d;
-                --link-color: #80b3ff;
-                --border-color: #e0e0e0;
-                --card-bg: #1e1e1e;
-            }
-        }
-
-        /* Paksa Mode Gelap jika ada class .dark-mode */
         body.dark-mode {
-            --bg-color: #121212;
+            --bg-color: #1a1a1b;
             --text-color: #e0e0e0;
-            --accent-color: #ff4d4d;
+            --accent-color: #e67e22;
             --link-color: #80b3ff;
-            --border-color: #e0e0e0;
-            --card-bg: #1e1e1e;
+            --border-color: rgba(255,255,255,0.1);
         }
 
-        /* Standar Aksesibilitas */
+        /* Animasi Membuka Kertas */
+        @keyframes paperOpen {
+            from { transform: scaleY(0.9); opacity: 0; filter: blur(5px); }
+            to { transform: scaleY(1); opacity: 1; filter: blur(0); }
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.9;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s;
+            animation: paperOpen 1.2s ease-out; /* Animasi Kertas Terbuka */
+        }
+
+        /* Skip Link untuk WCAG */
         .skip-link {
             position: absolute;
             top: -100px;
@@ -49,72 +52,62 @@
         }
         .skip-link:focus { top: 0; }
 
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
         header {
-            border-bottom: 3px solid var(--border-color);
-            margin-bottom: 40px;
-            padding-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 50px;
+            padding-bottom: 30px;
         }
 
-        .controls {
-            text-align: right;
-            margin-bottom: 10px;
-        }
+        h1 { font-size: 2.5rem; letter-spacing: 4px; margin-bottom: 5px; }
 
-        button#theme-toggle {
-            padding: 8px 15px;
-            font-family: sans-serif;
-            font-weight: bold;
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 5px 15px;
             cursor: pointer;
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 5px;
-        }
-
-        button:focus, a:focus {
-            outline: 4px solid var(--link-color);
-            outline-offset: 4px;
+            font-family: sans-serif;
+            margin-bottom: 20px;
         }
 
         nav ul {
             list-style: none;
             padding: 0;
             display: flex;
+            justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
 
         nav a {
-            font-family: sans-serif;
+            text-decoration: none;
+            color: var(--text-color);
             font-weight: bold;
-            text-decoration: underline;
-            color: var(--link-color);
-        }
-
-        h2 {
             font-family: sans-serif;
-            border-left: 6px solid var(--accent-color);
-            padding-left: 15px;
-            margin-top: 50px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
-        article {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
+        nav a:focus, .theme-btn:focus {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 4px;
         }
+
+        /* Elemen Reflektif: Blockquote */
+        blockquote {
+            font-style: italic;
+            margin: 50px 0;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            background: rgba(0,0,0,0.02);
+        }
+
+        article { margin-bottom: 60px; }
+        h2 { font-family: sans-serif; color: var(--accent-color); font-size: 1.4rem; }
 
         .sr-only {
             position: absolute;
@@ -123,11 +116,17 @@
         }
 
         footer {
-            margin-top: 80px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
+            margin-top: 100px;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.7;
             font-family: sans-serif;
-            font-size: 0.9rem;
+        }
+
+        /* Responsif Mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            body { padding: 15px; }
         }
     </style>
 </head>
@@ -135,63 +134,76 @@
 
     <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
 
-    <div class="controls">
-        <button id="theme-toggle" aria-pressed="false">Ganti Mode Cahaya/Gelap</button>
+    <div style="text-align: right;">
+        <button id="dark-toggle" class="theme-btn">Ganti Cahaya/Gelap</button>
     </div>
 
     <header role="banner">
         <h1>KANILA</h1>
-        <p><strong>Puisi, Opini, dan Refleksi Organisasi</strong></p>
+        <p><em>"Menulis adalah cara terbaik merayakan sunyi."</em></p>
         <nav role="navigation" aria-label="Menu Utama">
             <ul>
-                <li><a href="#tentang">Tentang</a></li>
-                <li><a href="#opini">Opini</a></li>
-                <li><a href="#puisi">Puisi</a></li>
-                <li><a href="#kontak">Kontak</a></li>
+                <li><a href="#tentang" onclick="playSound()">Tentang</a></li>
+                <li><a href="#opini" onclick="playSound()">Opini</a></li>
+                <li><a href="#puisi" onclick="playSound()">Puisi</a></li>
+                <li><a href="#kontak" onclick="playSound()">Kontak</a></li>
+                <li><a href="/admin" onclick="playSound()">Admin</a></li>
             </ul>
         </nav>
     </header>
 
     <main id="main-content" role="main" tabindex="-1">
+        
         <section id="tentang">
             <h2>Tentang Saya</h2>
-            <p>Saya adalah seorang penulis yang bergerak di antara logika organisasi dan estetika sastra. Website ini berfungsi sebagai arsip digital untuk pemikiran kritis saya mengenai politik, buku, dan musik.</p>
+            <p>Saya adalah pengembara kata yang sering terjebak dalam pemikiran kritis mengenai organisasi, politik, dan seni. Di sini, saya mengarsipkan refleksi melankolis dan opini yang saya harap bisa menjadi cermin bagi siapa pun yang membacanya.</p>
         </section>
+
+        <blockquote>
+            "Dunia mungkin berisik, namun dalam tulisan, kita menemukan sunyi yang paling jujur."
+        </blockquote>
 
         <section id="opini">
-            <h2>Pojok Opini</h2>
+            <h2>Opini Terkini</h2>
             <article>
-                <h3>Dinamika Organisasi</h3>
-                <p>Bagaimana struktur organisasi beradaptasi di era digital...</p>
-                <a href="#">Baca selengkapnya <span class="sr-only">tentang artikel Dinamika Organisasi</span></a>
+                <h3>Refleksi Organisasi di Persimpangan Zaman</h3>
+                <p>Bagaimana kemanusiaan tetap terjaga di tengah struktur yang kaku...</p>
+                <a href="#" onclick="playSound()">Baca Selengkapnya <span class="sr-only">tentang Refleksi Organisasi</span></a>
             </article>
         </section>
 
-        <section id="puisi">
-            <h2>Antologi Puisi</h2>
-            <article>
-                <h3>Sajak di Ujung Malam</h3>
-                <p><em>"Ketika kata tak lagi mampu meredam riuh..."</em></p>
-            </article>
-        </section>
-
-        <section id="kontak">
-            <h2>Kontak</h2>
-            <p>Email: <a href="mailto:banyunugraha80@gmail.com">banyunugraha80@gmail.com</a></p>
-        </section>
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2026 Kanila. Aksesibel & Responsif.</p>
+        <p>&copy; 2026 Kanila. Dirancang dengan Aksesibilitas WCAG & Jiwa Reflektif.</p>
     </footer>
 
+    <audio id="paperSound" src="https://www.soundjay.com/misc/paper-turn-1.mp3" preload="auto"></audio>
+
     <script>
-        const btn = document.getElementById("theme-toggle");
+        // Fungsi Suara Kertas
+        function playSound() {
+            const audio = document.getElementById('paperSound');
+            audio.play();
+        }
+
+        // Toggle Dark Mode
+        const btn = document.getElementById("dark-toggle");
         btn.addEventListener("click", function() {
             document.body.classList.toggle("dark-mode");
-            const isDark = document.body.classList.contains("dark-mode");
-            btn.setAttribute("aria-pressed", isDark);
+            playSound();
         });
+
+        // Integrasi Netlify Identity
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
