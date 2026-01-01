@@ -3,77 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Portofolio Penulis & Pemikir Kritis</title>
+    <title>Kanila | Portofolio Penulis & Pemikiran Kritis</title>
     <style>
-        /* Desain Minimalis & Aksesibel */
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.8; 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 20px; 
-            color: #1a1a1a;
-            background-color: #fcfcfc;
+        /* Variabel Warna untuk Mode Terang & Gelap */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #8b0000;
+            --link-color: #0056b3;
+            --border-color: #1a1a1a;
+            --card-bg: #f9f9f9;
         }
-        header { border-bottom: 3px solid #333; margin-bottom: 30px; padding-bottom: 20px; }
-        nav ul { list-style: none; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
-        nav a { text-decoration: none; font-weight: bold; color: #0056b3; padding: 5px 0; }
-        nav a:hover, nav a:focus { text-decoration: underline; outline: 2px solid #0056b3; }
-        article { margin-bottom: 40px; border-left: 5px solid #eee; padding-left: 20px; }
-        h1 { font-size: 2.5em; margin-bottom: 0.2em; }
-        h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 40px; }
-        footer { margin-top: 60px; padding: 20px 0; border-top: 1px solid #ddd; font-size: 0.9em; }
-        .skip-link { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
-        .skip-link:focus { position: static; width: auto; height: auto; }
+
+        /* Skema Warna Gelap */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #e0e0e0;
+                --accent-color: #ff4d4d;
+                --link-color: #80b3ff;
+                --border-color: #e0e0e0;
+                --card-bg: #1e1e1e;
+            }
+        }
+
+        /* Paksa Mode Gelap jika ada class .dark-mode */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #ff4d4d;
+            --link-color: #80b3ff;
+            --border-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+        }
+
+        /* Standar Aksesibilitas */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            z-index: 100;
+        }
+        .skip-link:focus { top: 0; }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            border-bottom: 3px solid var(--border-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        .controls {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        button#theme-toggle {
+            padding: 8px 15px;
+            font-family: sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:focus, a:focus {
+            outline: 4px solid var(--link-color);
+            outline-offset: 4px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-family: sans-serif;
+            font-weight: bold;
+            text-decoration: underline;
+            color: var(--link-color);
+        }
+
+        h2 {
+            font-family: sans-serif;
+            border-left: 6px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 50px;
+        }
+
+        article {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
+
     <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
 
+    <div class="controls">
+        <button id="theme-toggle" aria-pressed="false">Ganti Mode Cahaya/Gelap</button>
+    </div>
+
     <header role="banner">
-        <h1>Kanila</h1>
-        <p><strong>Penulis, Pengamat Organisasi, dan Pengarsip Rasa.</strong></p>
+        <h1>KANILA</h1>
+        <p><strong>Puisi, Opini, dan Refleksi Organisasi</strong></p>
         <nav role="navigation" aria-label="Menu Utama">
             <ul>
-                <li><a href="#tentang">Tentang Saya</a></li>
-                <li><a href="#opini">Pojok Opini</a></li>
-                <li><a href="#puisi">Antologi Puisi</a></li>
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#opini">Opini</a></li>
+                <li><a href="#puisi">Puisi</a></li>
                 <li><a href="#kontak">Kontak</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="main-content" role="main">
+    <main id="main-content" role="main" tabindex="-1">
         <section id="tentang">
             <h2>Tentang Saya</h2>
-            <p>Halo, saya Kanila. Website ini adalah rumah bagi pemikiran kritis saya mengenai politik, organisasi, dan seni, sekaligus tempat saya mengarsipkan puisi dan jurnal pribadi sebagai refleksi di masa depan.</p>
+            <p>Saya adalah seorang penulis yang bergerak di antara logika organisasi dan estetika sastra. Website ini berfungsi sebagai arsip digital untuk pemikiran kritis saya mengenai politik, buku, dan musik.</p>
         </section>
 
         <section id="opini">
             <h2>Pojok Opini</h2>
             <article>
-                <h3>Catatan Organisasi & Politik</h3>
-                <p>Menjelajahi dinamika manusia dalam struktur organisasi dan fenomena politik melalui kacamata kritis.</p>
-            </article>
-            <article>
-                <h3>Resensi Buku & Musik</h3>
-                <p>Bedah karya sastra dan harmoni musik yang menggugah pikiran.</p>
+                <h3>Dinamika Organisasi</h3>
+                <p>Bagaimana struktur organisasi beradaptasi di era digital...</p>
+                <a href="#">Baca selengkapnya <span class="sr-only">tentang artikel Dinamika Organisasi</span></a>
             </article>
         </section>
 
         <section id="puisi">
             <h2>Antologi Puisi</h2>
-            <p>Kumpulan sajak dan jurnal pribadi yang lahir dari perenungan mendalam.</p>
+            <article>
+                <h3>Sajak di Ujung Malam</h3>
+                <p><em>"Ketika kata tak lagi mampu meredam riuh..."</em></p>
+            </article>
         </section>
 
         <section id="kontak">
-            <h2>Kontak & Kerjasama</h2>
-            <p>Tertarik untuk berdiskusi atau bekerjasama? Anda dapat menghubungi saya melalui email di: <strong>banyunugraha80@gmail.com</strong></p>
+            <h2>Kontak</h2>
+            <p>Email: <a href="mailto:banyunugraha80@gmail.com">banyunugraha80@gmail.com</a></p>
         </section>
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2026 Kanila. Dibuat dengan standar aksesibilitas WCAG.</p>
+        <p>&copy; 2026 Kanila. Aksesibel & Responsif.</p>
     </footer>
+
+    <script>
+        const btn = document.getElementById("theme-toggle");
+        btn.addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+            const isDark = document.body.classList.contains("dark-mode");
+            btn.setAttribute("aria-pressed", isDark);
+        });
+    </script>
 </body>
 </html>
