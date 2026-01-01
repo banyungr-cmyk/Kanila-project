@@ -6,7 +6,6 @@
     <title>{{ page.title }} | KANILA</title>
     <style>
         :root {
-            /* Tema Terang (Light Mode) */
             --bg-paper: #FDFCF8;
             --text-dark: #2C2C2C;
             --accent-purple: #745E8D;
@@ -14,7 +13,6 @@
             --border: #E0DED7;
         }
 
-        /* Dark Mode Otomatis (Aksesibilitas Tinggi) */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-paper: #1A1A1A;
@@ -25,7 +23,6 @@
             }
         }
 
-        /* Animasi Kertas dan Fade In */
         body {
             font-family: 'Georgia', serif;
             background-color: var(--bg-paper);
@@ -43,7 +40,7 @@
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
 
-        /* Skip Link untuk Standar WCAG */
+        /* PERBAIKAN: Teks Skip Link yang benar */
         .skip-link {
             position: absolute;
             top: -100px; left: 10px;
@@ -58,34 +55,31 @@
 
         header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
         .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; font-weight: bold; }
-        
         nav { margin-top: 20px; }
         nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
         nav a:focus { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
 
         main { max-width: 800px; margin: 60px auto; padding: 0 25px; min-height: 60vh; outline: none; }
-        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; margin-bottom: 10px; }
+        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; }
 
-        .post-tools { display: flex; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; }
+        .post-tools { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; }
         .tool-btn { background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
-        .tool-btn:hover, .tool-btn:focus { background: var(--accent-purple); color: white; outline: none; }
+        .tool-btn:hover, .tool-btn:focus { background: var(--accent-purple); color: white; }
 
         .post-content { text-align: justify; margin-bottom: 60px; font-size: 1.2rem; }
 
-        /* Navigasi Next/Prev (Kembali Ada) */
         .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
-        .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; transition: 0.3s; }
-        .post-nav a:hover, .post-nav a:focus { background: var(--border); color: var(--accent-pink); }
+        .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; }
 
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
     </style>
 </head>
 <body>
 
-    <a href="#main-content" class="skip-link">Lonceng ke Konten Utama</a>
+    <a href="#main-content" class="skip-link">Loncat ke Konten Utama</a>
 
     <audio id="paperSound" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
     </audio>
 
     <header role="banner">
@@ -103,68 +97,54 @@
             
             <div class="post-tools">
                 <button class="tool-btn" onclick="speakContent()" aria-label="Dengarkan tulisan ini">🔊 Dengarkan</button>
-                <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini ke media sosial">🔗 Bagikan</button>
+                <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">🔗 Bagikan</button>
+                <button class="tool-btn" onclick="changeFontSize(1)" aria-label="Perbesar teks">A+</button>
+                <button class="tool-btn" onclick="changeFontSize(-1)" aria-label="Perkecil teks">A-</button>
             </div>
 
             <div id="contentToRead" class="post-content">
                 {{ content }}
             </div>
 
-            <nav class="post-nav" aria-label="Navigasi Tulisan Lain">
-                <div>
-                    {% if page.previous %}
-                        <a href="{{ page.previous.url }}" rel="prev" aria-label="Kembali ke: {{ page.previous.title }}">
-                            <span aria-hidden="true">&larr;</span> Sebelumnya: {{ page.previous.title }}
-                        </a>
-                    {% endif %}
-                </div>
-                <div>
-                    {% if page.next %}
-                        <a href="{{ page.next.url }}" rel="next" aria-label="Lanjut ke: {{ page.next.title }}">
-                            Selanjutnya: {{ page.next.title }} <span aria-hidden="true">&rarr;</span>
-                        </a>
-                    {% endif %}
-                </div>
+            <nav class="post-nav" aria-label="Navigasi Tulisan">
+                <div>{% if page.previous %}<a href="{{ page.previous.url }}">&larr; {{ page.previous.title }}</a>{% endif %}</div>
+                <div>{% if page.next %}<a href="{{ page.next.url }}">{{ page.next.title }} &rarr;</a>{% endif %}</div>
             </nav>
         </article>
     </main>
 
     <script>
-        // Memastikan suara kertas berbunyi saat load
         window.addEventListener('DOMContentLoaded', () => {
             const paperAudio = document.getElementById('paperSound');
-            paperAudio.play().catch(() => { 
-                console.log("Audio tertahan proteksi browser. Klik layar untuk mengizinkan."); 
-            });
+            paperAudio.play().catch(() => { console.log("Interaksi dibutuhkan untuk audio"); });
         });
 
-        // Fungsi Text-to-Speech (Suara)
-        function speakContent() {
-            const text = document.getElementById('contentToRead').innerText;
-            const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'id-ID'; // Pastikan suara bahasa Indonesia
-            synth.speak(utterance);
+        let currentFontSize = 1.2;
+        function changeFontSize(delta) {
+            currentFontSize += delta * 0.1;
+            document.getElementById('contentToRead').style.fontSize = currentFontSize + 'rem';
         }
 
-        // Fungsi Share (Berbagi)
+        function speakContent() {
+            const text = document.getElementById('contentToRead').innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'id-ID';
+            window.speechSynthesis.speak(utterance);
+        }
+
         function sharePage() {
             if (navigator.share) {
-                navigator.share({
-                    title: '{{ page.title }} - KANILA',
-                    text: 'Baca tulisan puitis ini di Kanila',
-                    url: window.location.href
-                });
+                navigator.share({ title: '{{ page.title }}', url: window.location.href });
             } else {
-                alert('Tautan berhasil disalin ke clipboard.');
                 navigator.clipboard.writeText(window.location.href);
+                alert('Tautan disalin.');
             }
         }
     </script>
 
-    <footer role="contentinfo">
+    <footer>
         <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
-        <p>&copy; 2026 Banyu Kanila | Aksesibilitas adalah Keharusan</p>
+        <p>&copy; 2026 Banyu Kanila | WCAG 2.1 Compliance</p>
     </footer>
 
 </body>
