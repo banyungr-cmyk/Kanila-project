@@ -1,30 +1,183 @@
-<nav role="navigation" aria-label="Menu Utama">
-    <ul>
-        <li><a href="#tentang" onclick="playSound()">Tentang</a></li>
-        <li><a href="#celoteh" onclick="playSound()">Celoteh</a></li>
-        <li><a href="#aksara" onclick="playSound()">Antologi Aksara</a></li>
-        <li><a href="#kontak" onclick="playSound()">Kontak</a></li>
-        <li><a href="/admin" onclick="playSound()">Admin</a></li>
-    </ul>
-</nav>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanila | Jurnal Reflektif & Aksara</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        :root {
+            --bg-color: #fdfaf6;
+            --text-color: #1a1a1a;
+            --accent-color: #722f37;
+            --border-color: rgba(0,0,0,0.1);
+            --focus-ring: #0056b3;
+        }
 
-<section id="celoteh">
-    <h2>Celoteh</h2>
-    <div id="opini-container" class="post-list">
-        <p>Memanggil narasi...</p>
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #d1d1d1;
+            --accent-color: #ff6b6b;
+            --border-color: rgba(255,255,255,0.1);
+        }
+
+        /* WCAG: Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            text-decoration: none;
+        }
+        .skip-link:focus { top: 0; }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s;
+        }
+
+        /* Indikator Fokus yang Jelas */
+        a:focus, button:focus {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 4px;
+        }
+
+        header { text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; margin-bottom: 50px; }
+        h1 { letter-spacing: 5px; font-weight: normal; text-transform: uppercase; }
+
+        nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--text-color); font-family: sans-serif; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+
+        /* Looping Post Style */
+        .post-list { display: grid; gap: 20px; }
+        .post-card { 
+            padding: 20px; 
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.01);
+        }
+        .post-card h3 { margin: 0 0 10px 0; font-size: 1.35rem; color: var(--accent-color); }
+        
+        /* Teks Khusus Screen Reader */
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        blockquote { font-style: italic; text-align: center; padding: 40px; margin: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+
+        footer { margin-top: 80px; text-align: center; font-family: sans-serif; font-size: 0.8rem; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
+
+    <div style="text-align: right; margin-bottom: 20px;">
+        <button id="dark-toggle" aria-label="Aktifkan Mode Gelap atau Terang">Mode Cahaya / Gelap</button>
     </div>
-</section>
 
-<section id="aksara">
-    <h2>Antologi Aksara</h2>
-    <div id="puisi-container" class="post-list">
-        <p>Menyusun rima...</p>
-    </div>
-</section>
+    <header role="banner">
+        <h1>KANILA</h1>
+        <p><em>"Menulis untuk merawat ingatan."</em></p>
+        <nav role="navigation" aria-label="Menu Utama">
+            <ul>
+                <li><a href="#tentang" onclick="playSound()">Tentang</a></li>
+                <li><a href="#celoteh" onclick="playSound()">Celoteh</a></li>
+                <li><a href="#aksara" onclick="playSound()">Aksara</a></li>
+                <li><a href="/admin" onclick="playSound()">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        fetchPosts('_opini', 'opini-container');
-        fetchPosts('_puisi', 'puisi-container');
-    });
-</script>
+    <main id="main-content" role="main" tabindex="-1">
+        <section id="tentang" aria-labelledby="judul-tentang">
+            <h2 id="judul-tentang">Tentang Saya</h2>
+            <p>Seorang penulis yang mencintai organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis yang lahir dari perenungan.</p>
+        </section>
+
+        <blockquote aria-label="Kutipan Reflektif">
+            "Ada hal-hal yang hanya bisa dimengerti ketika kita berhenti bicara dan mulai menulis."
+        </blockquote>
+
+        <section id="celoteh" aria-labelledby="judul-celoteh">
+            <h2 id="judul-celoteh">Celoteh</h2>
+            <div id="opini-container" class="post-list">
+                <p>Memanggil narasi dari folder _opini...</p>
+            </div>
+        </section>
+
+        <section id="aksara" aria-labelledby="judul-aksara">
+            <h2 id="judul-aksara">Antologi Aksara</h2>
+            <div id="puisi-container" class="post-list">
+                <p>Menyusun rima dari folder _puisi...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2026 Kanila | Sesuai Standar Aksesibilitas WCAG</p>
+    </footer>
+
+    <audio id="paperSound" src="https://www.soundjay.com/misc/paper-turn-1.mp3" preload="auto"></audio>
+
+    <script>
+        function playSound() { 
+            const audio = document.getElementById('paperSound');
+            audio.currentTime = 0;
+            audio.play().catch(() => {}); 
+        }
+
+        document.getElementById("dark-toggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            playSound();
+        });
+
+        async function fetchPosts(folder, containerId) {
+            const container = document.getElementById(containerId);
+            try {
+                // Pastikan nama repositori di bawah ini sudah benar
+                const response = await fetch(`https://api.github.com/repos/BanyuNugraha/website-portofolio/contents/${folder}`);
+                if (!response.ok) throw new Error();
+                const files = await response.json();
+                
+                if (files.length > 0) {
+                    container.innerHTML = "";
+                    files.reverse().forEach(file => {
+                        if (file.name.endsWith('.md')) {
+                            const title = file.name.replace('.md', '').replace(/-/g, ' ');
+                            const card = document.createElement('article');
+                            card.className = 'post-card';
+                            card.innerHTML = `
+                                <h3>${title}</h3>
+                                <a href="https://github.com/BanyuNugraha/website-portofolio/blob/main/${folder}/${file.name}" target="_blank" onclick="playSound()">
+                                    Baca Tulisan <span class="sr-only">tentang ${title}</span>
+                                </a>
+                            `;
+                            container.appendChild(card);
+                        }
+                    });
+                } else {
+                    container.innerHTML = "<p>Belum ada arsip di folder ini.</p>";
+                }
+            } catch (e) {
+                container.innerHTML = "<p>Folder _" + folder + " belum tersedia atau kosong.</p>";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchPosts('_opini', 'opini-container');
+            fetchPosts('_puisi', 'puisi-container');
+        });
+    </script>
+</body>
+</html>
