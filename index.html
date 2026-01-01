@@ -3,40 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KANILA | Ruang Aksara & Celoteh</title>
+    <title>KANILA | Ruang Aksara, pikiran hingga nafas terasa.</title>
     <style>
         :root {
-            /* Palet Warna WCAG Compliant */
             --bg-paper: #FDFCF8;
             --text-dark: #2C2C2C;
-            --accent-purple: #745E8D; /* Ungu yang lebih gelap untuk kontras AA */
-            --accent-pink: #A65D6A;   /* Pink yang lebih gelap untuk kontras AA */
+            --accent-purple: #745E8D;
+            --accent-pink: #A65D6A;
             --border: #E0DED7;
-            --focus-ring: #2563EB;
         }
 
         body {
             font-family: 'Georgia', serif;
             background-color: var(--bg-paper);
             color: var(--text-dark);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             line-height: 1.8;
             font-size: 1.1rem;
+            overflow-x: hidden;
         }
 
-        /* Navigasi Skip untuk Aksesibilitas Keyboard */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--accent-purple);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            text-decoration: none;
+        /* Animasi Transisi Halaman (Halaman Buku) */
+        .page-transition {
+            animation: flipPage 0.8s ease-in-out;
         }
-        .skip-link:focus { top: 0; }
+
+        @keyframes flipPage {
+            0% { opacity: 0.5; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
 
         header {
             padding: 60px 20px 20px;
@@ -62,7 +57,7 @@
             text-decoration: none;
             color: var(--text-dark);
             margin: 0 15px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: bold;
@@ -70,12 +65,12 @@
         }
 
         nav a:hover, nav a:focus {
-            color: var(--accent-purple);
-            outline: 2px solid var(--accent-purple);
+            color: var(--accent-pink);
+            outline: 2px solid var(--accent-pink);
             outline-offset: 4px;
         }
 
-        /* Layout Utama: 2 Kolom */
+        /* Layout 2 Kolom */
         main {
             display: flex;
             flex-wrap: wrap;
@@ -116,7 +111,7 @@
         .excerpt {
             font-style: italic;
             color: #444;
-            margin-bottom: auto; /* Mendorong tombol ke bawah */
+            margin-bottom: auto;
         }
 
         .btn-read {
@@ -128,12 +123,7 @@
             border-bottom: 2px solid var(--accent-pink);
             padding-bottom: 2px;
             align-self: flex-start;
-        }
-
-        .btn-read:hover, .btn-read:focus {
-            background-color: var(--accent-pink);
-            color: white;
-            outline: none;
+            cursor: pointer;
         }
 
         footer {
@@ -143,44 +133,34 @@
             margin-top: 40px;
         }
 
-        .social-nav a {
-            color: var(--accent-purple);
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        /* Responsif untuk HP */
         @media (max-width: 768px) {
-            .column-left {
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-            .logo { letter-spacing: 0.1em; }
+            .column-left { border-right: none; border-bottom: 1px solid var(--border); }
         }
     </style>
 </head>
 <body>
 
-    <a href="#content" class="skip-link">Loncati ke konten utama</a>
+    <audio id="pageSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/paper-flip-1.mp3" type="audio/mpeg">
+    </audio>
 
     <header role="banner">
         <h1 class="logo">KANILA</h1>
         <nav role="navigation" aria-label="Menu Utama">
-            <a href="/">Beranda</a>
-            <a href="/about">Tentang</a>
-            <a href="/kontak">Kontak</a>
-            <a href="/arsip">Arsip</a>
+            <a href="/" onclick="playFlip()">Beranda</a>
+            <a href="/about.html" onclick="playFlip()">Tentang</a>
+            <a href="/kontak.html" onclick="playFlip()">Kontak</a>
+            <a href="/arsip.html" onclick="playFlip()">Arsip</a>
         </nav>
     </header>
 
-    <main id="content" role="main">
+    <main id="content" role="main" class="page-transition">
         <section class="column column-left" aria-labelledby="label-puisi">
             <span id="label-puisi" class="label-kategori">Antologi Aksara</span>
             <article>
                 <h2>Janji Kala Senja</h2>
-                <p class="excerpt">"Di ufuk yang memerah, aku menitipkan pesan pada angin. Bahwa rindu tak pernah benar-benar padam, ia hanya bersembunyi di balik malam..."</p>
-                <a href="/puisi/janji-kala-senja" class="btn-read" aria-label="Baca selengkapnya tentang Janji Kala Senja">Baca Puisi</a>
+                <p class="excerpt">"Di ufuk yang memerah, aku menitipkan pesan pada angin. Bahwa rindu tak pernah benar-benar padam..."</p>
+                <a href="/puisi/janji-kala-senja.html" class="btn-read" onclick="playFlip()">Baca Puisi</a>
             </article>
         </section>
 
@@ -188,20 +168,23 @@
             <span id="label-opini" class="label-kategori">Celoteh</span>
             <article>
                 <h2>Menemukan Sunyi dalam Digital</h2>
-                <p class="excerpt">"Kadang kita perlu mematikan layar untuk menghidupkan jiwa. Di antara bising notifikasi, suara hati sering kali tenggelam tak terdengar..."</p>
-                <a href="/opini/menemukan-sunyi" class="btn-read" aria-label="Baca selengkapnya tentang Menemukan Sunyi dalam Digital">Baca Opini</a>
+                <p class="excerpt">"Kadang kita perlu mematikan layar untuk menghidupkan jiwa. Di antara bising notifikasi, suara hati sering kali tenggelam..."</p>
+                <a href="/opini/menemukan-sunyi.html" class="btn-read" onclick="playFlip()">Baca Opini</a>
             </article>
         </section>
     </main>
 
     <footer role="contentinfo">
-        <nav class="social-nav" aria-label="Media Sosial">
-            <a href="#">Instagram</a> | 
-            <a href="#">Twitter</a> | 
-            <a href="mailto:halo@kanila.web.id">Email</a>
-        </nav>
-        <p style="margin-top: 20px;">&copy; 2026 KANILA. Dipersembahkan untuk ketenangan jiwa.</p>
+        <p>Lakukan semua dengan hati, maka akan sampai juga pada hati.</p>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">&copy; 2026 Banyu Kanila</p>
     </footer>
+
+    <script>
+        function playFlip() {
+            var sound = document.getElementById("pageSound");
+            sound.play();
+        }
+    </script>
 
 </body>
 </html>
