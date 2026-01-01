@@ -3,157 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Jurnal Reflektif</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>KANILA | Ruang Aksara & Celoteh</title>
     <style>
         :root {
-            --bg-color: #fdfaf6;
-            --text-color: #1a1a1a;
-            --accent-color: #722f37;
-            --border-color: rgba(0,0,0,0.1);
+            /* Palet Warna WCAG Compliant */
+            --bg-paper: #FDFCF8;
+            --text-dark: #2C2C2C;
+            --accent-purple: #745E8D; /* Ungu yang lebih gelap untuk kontras AA */
+            --accent-pink: #A65D6A;   /* Pink yang lebih gelap untuk kontras AA */
+            --border: #E0DED7;
+            --focus-ring: #2563EB;
         }
-        body.dark-mode {
-            --bg-color: #121212;
-            --text-color: #d1d1d1;
-            --accent-color: #ff6b6b;
-            --border-color: rgba(255,255,255,0.1);
-        }
-        .skip-link { position: absolute; top: -100px; left: 0; background: var(--accent-color); color: white; padding: 10px; z-index: 1000; }
-        .skip-link:focus { top: 0; }
 
         body {
             font-family: 'Georgia', serif;
-            line-height: 1.9;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: all 0.5s;
+            background-color: var(--bg-paper);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
-        header { text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; margin-bottom: 50px; }
-        h1 { letter-spacing: 5px; text-transform: uppercase; font-weight: normal; }
-        
-        nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        nav a { text-decoration: none; color: var(--text-color); font-family: sans-serif; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
 
-        /* Tampilan Postingan Langsung */
-        article.post { 
-            margin-bottom: 80px; 
-            padding-bottom: 40px; 
-            border-bottom: 1px solid var(--border-color);
-            animation: fadeIn 1s;
+        /* Navigasi Skip untuk Aksesibilitas Keyboard */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-purple);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            text-decoration: none;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        article.post h3 { margin: 0 0 20px 0; color: var(--accent-color); font-size: 1.8rem; text-transform: capitalize; }
-        .post-content { font-size: 1.2rem; line-height: 2; text-align: justify; }
-        .post-content p { margin-bottom: 1.5rem; }
+        .skip-link:focus { top: 0; }
 
-        button { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 15px; cursor: pointer; font-family: sans-serif; }
-        blockquote { font-style: italic; text-align: center; padding: 40px; margin: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); opacity: 0.8; }
-        footer { margin-top: 100px; text-align: center; font-size: 0.9rem; opacity: 0.7; font-family: sans-serif; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        header {
+            padding: 60px 20px 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            letter-spacing: 0.2em;
+            margin: 0;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        nav {
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin: 0 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        nav a:hover, nav a:focus {
+            color: var(--accent-purple);
+            outline: 2px solid var(--accent-purple);
+            outline-offset: 4px;
+        }
+
+        /* Layout Utama: 2 Kolom */
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 40px auto;
+            min-height: 60vh;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 320px;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-left {
+            border-right: 1px solid var(--border);
+        }
+
+        .label-kategori {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin: 10px 0 20px;
+            font-weight: normal;
+            line-height: 1.2;
+        }
+
+        .excerpt {
+            font-style: italic;
+            color: #444;
+            margin-bottom: auto; /* Mendorong tombol ke bawah */
+        }
+
+        .btn-read {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--accent-pink);
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-pink);
+            padding-bottom: 2px;
+            align-self: flex-start;
+        }
+
+        .btn-read:hover, .btn-read:focus {
+            background-color: var(--accent-pink);
+            color: white;
+            outline: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .social-nav a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 768px) {
+            .column-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .logo { letter-spacing: 0.1em; }
+        }
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
 
-    <div style="text-align: right; margin-bottom: 20px;">
-        <button id="dark-toggle" aria-label="Ganti Mode Gelap/Terang">Mode Cahaya / Gelap</button>
-    </div>
+    <a href="#content" class="skip-link">Loncati ke konten utama</a>
 
     <header role="banner">
-        <h1>KANILA</h1>
-        <p><em>"Mengabadikan sunyi melalui aksara reflektif."</em></p>
+        <h1 class="logo">KANILA</h1>
         <nav role="navigation" aria-label="Menu Utama">
-            <ul>
-                <li><a href="#tentang">Tentang</a></li>
-                <li><a href="#celoteh">Celoteh</a></li>
-                <li><a href="#aksara">Antologi Aksara</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-            </ul>
+            <a href="/">Beranda</a>
+            <a href="/about">Tentang</a>
+            <a href="/kontak">Kontak</a>
+            <a href="/arsip">Arsip</a>
         </nav>
     </header>
 
-    <main id="main-content" role="main" tabindex="-1">
-        <section id="tentang">
-            <h2>Tentang Saya</h2>
-            <p>Seorang penulis yang mencintai organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis.</p>
+    <main id="content" role="main">
+        <section class="column column-left" aria-labelledby="label-puisi">
+            <span id="label-puisi" class="label-kategori">Antologi Aksara</span>
+            <article>
+                <h2>Janji Kala Senja</h2>
+                <p class="excerpt">"Di ufuk yang memerah, aku menitipkan pesan pada angin. Bahwa rindu tak pernah benar-benar padam, ia hanya bersembunyi di balik malam..."</p>
+                <a href="/puisi/janji-kala-senja" class="btn-read" aria-label="Baca selengkapnya tentang Janji Kala Senja">Baca Puisi</a>
+            </article>
         </section>
 
-        <blockquote aria-label="Kutipan">"Sesuatu yang dituliskan tidak akan pernah benar-benar hilang."</blockquote>
-
-        <section id="celoteh">
-            <h2>Celoteh</h2>
-            <div id="opini-container"> <p>Memuat postingan...</p> </div>
-        </section>
-
-        <section id="aksara">
-            <h2>Antologi Aksara</h2>
-            <div id="puisi-container"> <p>Memuat baris sajak...</p> </div>
-        </section>
-
-        <section id="kontak">
-            <h2>Kontak</h2>
-            <p>Email: <a href="mailto:banyunugraha80@gmail.com">banyunugraha80@gmail.com</a></p>
+        <section class="column" aria-labelledby="label-opini">
+            <span id="label-opini" class="label-kategori">Celoteh</span>
+            <article>
+                <h2>Menemukan Sunyi dalam Digital</h2>
+                <p class="excerpt">"Kadang kita perlu mematikan layar untuk menghidupkan jiwa. Di antara bising notifikasi, suara hati sering kali tenggelam tak terdengar..."</p>
+                <a href="/opini/menemukan-sunyi" class="btn-read" aria-label="Baca selengkapnya tentang Menemukan Sunyi dalam Digital">Baca Opini</a>
+            </article>
         </section>
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2026 banyu Kanila and Kartunet.com</p>
+        <nav class="social-nav" aria-label="Media Sosial">
+            <a href="#">Instagram</a> | 
+            <a href="#">Twitter</a> | 
+            <a href="mailto:halo@kanila.web.id">Email</a>
+        </nav>
+        <p style="margin-top: 20px;">&copy; 2026 KANILA. Dipersembahkan untuk ketenangan jiwa.</p>
     </footer>
 
-    <script>
-        document.getElementById("dark-toggle").addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
-
-        async function loadPosts(folder, containerId) {
-            const container = document.getElementById(containerId);
-            const user = "banyungr-cmyk";
-            const repo = "Kanila-project";
-
-            try {
-                const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
-                if (!res.ok) throw new Error("Kosong");
-                const files = await res.json();
-                
-                // KITA HANYA MENGAMBIL FILE .MD (Markdown) ATAU .TXT (Teks Biasa)
-                const validFiles = files.filter(f => 
-                    f.name.toLowerCase().endsWith('.md') || 
-                    f.name.toLowerCase().endsWith('.txt')
-                ).reverse();
-                
-                if (validFiles.length > 0) {
-                    container.innerHTML = "";
-                    for (let file of validFiles) {
-                        const contentRes = await fetch(file.download_url);
-                        const rawText = await contentRes.text();
-                        
-                        // Bersihkan metadata jika ada
-                        const cleanText = rawText.replace(/^---[\s\S]*?---/m, '').trim();
-                        const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
-
-                        const article = document.createElement('article');
-                        article.className = 'post';
-                        article.innerHTML = `
-                            <h3>${title}</h3>
-                            <div class="post-content">${marked.parse(cleanText)}</div>
-                        `;
-                        container.appendChild(article);
-                    }
-                } else {
-                    container.innerHTML = "<p>Gunakan format .md atau .txt untuk postingan langsung.</p>";
-                }
-            } catch (e) {
-                container.innerHTML = "<p>Arsip sedang disiapkan...</p>";
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadPosts('_opini', 'opini-container');
-            loadPosts('_puisi', 'puisi-container');
-        });
-    </script>
 </body>
 </html>
