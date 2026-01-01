@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menyapa Banyu Kanila | KANILA</title>
+    <style>
+        :root {
+            --bg-paper: #FDFCF8;
+            --text-dark: #2C2C2C;
+            --accent-purple: #745E8D;
+            --accent-pink: #A65D6A;
+            --border: #E0DED7;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--bg-paper);
+            color: var(--text-dark);
+            margin: 0; padding: 0;
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        nav { margin-top: 20px; }
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin: 0 15px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        main {
+            max-width: 750px;
+            margin: 80px auto;
+            padding: 0 25px;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--accent-purple);
+        }
+
+        .intro {
+            font-style: italic;
+            margin-bottom: 60px;
+            color: #555;
+            display: block;
+        }
+
+        .contact-group {
+            margin-bottom: 50px;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-pink);
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .main-link {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .main-link:hover {
+            color: var(--accent-purple);
+            border-bottom-color: var(--accent-purple);
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .social-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .social-item:hover {
+            background-color: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+
+        .note {
+            margin-top: 80px;
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="logo">KANILA</a>
+        <nav>
+            <a href="/">Beranda</a>
+            <a href="/about.html">Tentang</a>
+            <a href="/kontak.html">Kontak</a>
+            <a href="/arsip">Arsip</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <h1>Menyapa Hati</h1>
+        <span class="intro">"Setiap percakapan adalah awal dari sebuah pemikiran yang lebih besar."</span>
+
+        <div class="contact-group">
+            <span class="label">Surat Digital</span>
+            <a href="mailto:banyunugraha80@gmail.com" class="main-link">banyunugraha80@gmail.com</a>
+        </div>
+
+        <div class="contact-group">
+            <span class="label">Pesan Instan (WhatsApp)</span>
+            <a href="https://wa.me/6285814029993?text=Halo%20Banyu%20Kanila,%20saya%20berkunjung%20dari%20website%20Anda." class="main-link">0858 1402 9993</a>
+        </div>
+
+        <div class="contact-group">
+            <span class="label">Ruang Sosial (@banyukanila)</span>
+            <div class="social-grid">
+                <a href="https://instagram.com/banyukanila" class="social-item">Instagram</a>
+                <a href="https://facebook.com/banyukanila" class="social-item">Facebook</a>
+                <a href="https://tiktok.com/@banyukanila" class="social-item">TikTok</a>
+                <a href="https://threads.net/@banyukanila" class="social-item">Threads</a>
+            </div>
+        </div>
+
+        <div class="contact-group">
+            <span class="label">Domisili</span>
+            <p>Tangerang Selatan, Indonesia</p>
+        </div>
+
+        <p class="note">
+            Saya menghargai setiap pesan yang datang. <br>
+            Mohon beri saya waktu untuk meresapi dan membalasnya dengan sepenuh hati.
+        </p>
+    </main>
+
+    <footer>
+        <p>Lakukan semua dengan hati, maka akan sampai juga pada hati.</p>
+    </footer>
+
+</body>
+</html>
