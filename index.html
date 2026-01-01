@@ -1,209 +1,30 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Jurnal Reflektif & Pemikiran Kritis</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
-        :root {
-            --bg-color: #fdfaf6;
-            --text-color: #1a1a1a;
-            --accent-color: #722f37; /* Wine Red untuk kesan melankolis */
-            --link-color: #0044cc;
-            --border-color: rgba(0,0,0,0.1);
-        }
+<nav role="navigation" aria-label="Menu Utama">
+    <ul>
+        <li><a href="#tentang" onclick="playSound()">Tentang</a></li>
+        <li><a href="#celoteh" onclick="playSound()">Celoteh</a></li>
+        <li><a href="#aksara" onclick="playSound()">Antologi Aksara</a></li>
+        <li><a href="#kontak" onclick="playSound()">Kontak</a></li>
+        <li><a href="/admin" onclick="playSound()">Admin</a></li>
+    </ul>
+</nav>
 
-        body.dark-mode {
-            --bg-color: #1a1a1b;
-            --text-color: #e0e0e0;
-            --accent-color: #e67e22;
-            --link-color: #80b3ff;
-            --border-color: rgba(255,255,255,0.1);
-        }
-
-        /* Animasi Membuka Kertas */
-        @keyframes paperOpen {
-            from { transform: scaleY(0.9); opacity: 0; filter: blur(5px); }
-            to { transform: scaleY(1); opacity: 1; filter: blur(0); }
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.9;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.5s;
-            animation: paperOpen 1.2s ease-out; /* Animasi Kertas Terbuka */
-        }
-
-        /* Skip Link untuk WCAG */
-        .skip-link {
-            position: absolute;
-            top: -100px;
-            left: 0;
-            background: var(--accent-color);
-            color: white;
-            padding: 10px 20px;
-            z-index: 100;
-        }
-        .skip-link:focus { top: 0; }
-
-        header {
-            text-align: center;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-        }
-
-        h1 { font-size: 2.5rem; letter-spacing: 4px; margin-bottom: 5px; }
-
-        .theme-btn {
-            background: none;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 5px 15px;
-            cursor: pointer;
-            font-family: sans-serif;
-            margin-bottom: 20px;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: bold;
-            font-family: sans-serif;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        nav a:focus, .theme-btn:focus {
-            outline: 3px solid var(--accent-color);
-            outline-offset: 4px;
-        }
-
-        /* Elemen Reflektif: Blockquote */
-        blockquote {
-            font-style: italic;
-            margin: 50px 0;
-            padding: 30px;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-            position: relative;
-            background: rgba(0,0,0,0.02);
-        }
-
-        article { margin-bottom: 60px; }
-        h2 { font-family: sans-serif; color: var(--accent-color); font-size: 1.4rem; }
-
-        .sr-only {
-            position: absolute;
-            width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0,0,0,0); border: 0;
-        }
-
-        footer {
-            margin-top: 100px;
-            font-size: 0.8rem;
-            text-align: center;
-            opacity: 0.7;
-            font-family: sans-serif;
-        }
-
-        /* Responsif Mobile */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            body { padding: 15px; }
-        }
-    </style>
-</head>
-<body>
-
-    <a href="#main-content" class="skip-link">Loncati ke konten utama</a>
-
-    <div style="text-align: right;">
-        <button id="dark-toggle" class="theme-btn">Ganti Cahaya/Gelap</button>
+<section id="celoteh">
+    <h2>Celoteh</h2>
+    <div id="opini-container" class="post-list">
+        <p>Memanggil narasi...</p>
     </div>
+</section>
 
-    <header role="banner">
-        <h1>KANILA</h1>
-        <p><em>"Menulis adalah cara terbaik merayakan sunyi."</em></p>
-        <nav role="navigation" aria-label="Menu Utama">
-            <ul>
-                <li><a href="#tentang" onclick="playSound()">Tentang</a></li>
-                <li><a href="#opini" onclick="playSound()">Opini</a></li>
-                <li><a href="#puisi" onclick="playSound()">Puisi</a></li>
-                <li><a href="#kontak" onclick="playSound()">Kontak</a></li>
-                <li><a href="/admin" onclick="playSound()">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
+<section id="aksara">
+    <h2>Antologi Aksara</h2>
+    <div id="puisi-container" class="post-list">
+        <p>Menyusun rima...</p>
+    </div>
+</section>
 
-    <main id="main-content" role="main" tabindex="-1">
-        
-        <section id="tentang">
-            <h2>Tentang Saya</h2>
-            <p>Saya adalah pengembara kata yang sering terjebak dalam pemikiran kritis mengenai organisasi, politik, dan seni. Di sini, saya mengarsipkan refleksi melankolis dan opini yang saya harap bisa menjadi cermin bagi siapa pun yang membacanya.</p>
-        </section>
-
-        <blockquote>
-            "Dunia mungkin berisik, namun dalam tulisan, kita menemukan sunyi yang paling jujur."
-        </blockquote>
-
-        <section id="opini">
-            <h2>Opini Terkini</h2>
-            <article>
-                <h3>Refleksi Organisasi di Persimpangan Zaman</h3>
-                <p>Bagaimana kemanusiaan tetap terjaga di tengah struktur yang kaku...</p>
-                <a href="#" onclick="playSound()">Baca Selengkapnya <span class="sr-only">tentang Refleksi Organisasi</span></a>
-            </article>
-        </section>
-
-    </main>
-
-    <footer role="contentinfo">
-        <p>&copy; 2026 Kanila. Dirancang dengan Aksesibilitas WCAG & Jiwa Reflektif.</p>
-    </footer>
-
-    <audio id="paperSound" src="https://www.soundjay.com/misc/paper-turn-1.mp3" preload="auto"></audio>
-
-    <script>
-        // Fungsi Suara Kertas
-        function playSound() {
-            const audio = document.getElementById('paperSound');
-            audio.play();
-        }
-
-        // Toggle Dark Mode
-        const btn = document.getElementById("dark-toggle");
-        btn.addEventListener("click", function() {
-            document.body.classList.toggle("dark-mode");
-            playSound();
-        });
-
-        // Integrasi Netlify Identity
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        fetchPosts('_opini', 'opini-container');
+        fetchPosts('_puisi', 'puisi-container');
+    });
+</script>
