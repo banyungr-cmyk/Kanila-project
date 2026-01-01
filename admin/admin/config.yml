@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: banyungr-cmyk/Kanila-project
   branch: main
 
 media_folder: "images"
@@ -13,7 +14,6 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Judul", name: "title", widget: "string"}
-      - {label: "Tanggal", name: "date", widget: "datetime"}
       - {label: "Isi Tulisan", name: "body", widget: "markdown"}
 
   - name: "puisi"
