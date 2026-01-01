@@ -91,12 +91,12 @@
 
         <section id="celoteh">
             <h2>Celoteh</h2>
-            <div id="opini-container"> <p>Menunggu arsip diunggah...</p> </div>
+            <div id="opini-container"> <p>Mencari berkas Celoteh di Kanila-project...</p> </div>
         </section>
 
         <section id="aksara">
             <h2>Antologi Aksara</h2>
-            <div id="puisi-container"> <p>Menunggu aksara terukir...</p> </div>
+            <div id="puisi-container"> <p>Mencari baris Aksara di Kanila-project...</p> </div>
         </section>
 
         <section id="kontak">
@@ -117,31 +117,32 @@
         async function loadPosts(folder, containerId) {
             const container = document.getElementById(containerId);
             const userName = "BanyuNugraha";
-            const repoName = "Kanila-project"; 
+            const repoName = "Kanila-project"; // Sudah diperbarui sesuai nama repo Anda
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${userName}/${repoName}/contents/${folder}`);
                 if (!res.ok) throw new Error("Kosong");
                 const files = await res.json();
                 
-                if (files.length > 0) {
+                const validFiles = files.filter(f => 
+                    f.name.endsWith('.md') || 
+                    f.name.endsWith('.docx') || 
+                    f.name.endsWith('.txt')
+                ).reverse();
+                
+                if (validFiles.length > 0) {
                     container.innerHTML = "";
-                    const validFiles = files.filter(f => 
-                        f.name.endsWith('.md') || 
-                        f.name.endsWith('.docx') || 
-                        f.name.endsWith('.txt')
-                    ).reverse();
-                    
                     for (let file of validFiles) {
                         const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
+                        const extension = file.name.split('.').pop().toUpperCase();
                         const article = document.createElement('article');
                         article.className = 'post-card';
                         
                         let actionText = "Baca Tulisan";
-                        if (file.name.endsWith('.docx')) actionText = "Unduh/Buka Dokumen (.docx)";
+                        if (extension === 'DOCX') actionText = "Buka Dokumen Word";
 
                         article.innerHTML = `
-                            <span class="post-meta">Format: ${file.name.split('.').pop().toUpperCase()}</span>
+                            <span class="post-meta">Format: ${extension}</span>
                             <h3>${title}</h3>
                             <a href="${file.html_url}" target="_blank" class="read-btn">
                                 ${actionText} <span class="sr-only">tentang ${title}</span>
@@ -149,13 +150,16 @@
                         `;
                         container.appendChild(article);
                     }
+                } else {
+                    container.innerHTML = "<p>Folder " + folder + " ditemukan, tapi belum ada file di dalamnya.</p>";
                 }
             } catch (e) {
-                // Biarkan teks default
+                container.innerHTML = "<p>Belum ada arsip di folder " + folder + ".</p>";
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Memastikan memanggil folder yang sesuai di GitHub Anda
             loadPosts('_opini', 'opini-container');
             loadPosts('_puisi', 'puisi-container');
         });
