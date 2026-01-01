@@ -1,190 +1,57 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KANILA | Ruang Aksara, pikiran hingga nafas terasa.</title>
-    <style>
-        :root {
-            --bg-paper: #FDFCF8;
-            --text-dark: #2C2C2C;
-            --accent-purple: #745E8D;
-            --accent-pink: #A65D6A;
-            --border: #E0DED7;
-        }
+---
+layout: default
+title: Beranda
+---
 
-        body {
-            font-family: 'Georgia', serif;
-            background-color: var(--bg-paper);
-            color: var(--text-dark);
-            margin: 0; padding: 0;
-            line-height: 1.8;
-            font-size: 1.1rem;
-            overflow-x: hidden;
-        }
+<style>
+    .hero-section { text-align: center; padding: 60px 0; border-bottom: 1px double var(--border); margin-bottom: 60px; }
+    .hero-section h2 { font-weight: normal; font-size: 2rem; color: var(--accent-purple); font-style: italic; }
+    
+    .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent-pink); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 30px; display: block; }
+    
+    .post-preview { margin-bottom: 40px; }
+    .post-preview h3 { font-weight: normal; font-size: 1.6rem; margin: 10px 0; }
+    .post-preview h3 a { text-decoration: none; color: var(--text-dark); transition: 0.3s; }
+    .post-preview h3 a:hover { color: var(--accent-purple); }
+    .post-excerpt { color: #555; font-size: 1rem; line-height: 1.6; }
+    .read-more { display: inline-block; margin-top: 15px; font-size: 0.8rem; text-decoration: none; color: var(--accent-purple); font-weight: bold; text-transform: uppercase; }
 
-        /* Animasi Transisi Halaman (Halaman Buku) */
-        .page-transition {
-            animation: flipPage 0.8s ease-in-out;
-        }
+    @media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; gap: 40px; } }
+</style>
 
-        @keyframes flipPage {
-            0% { opacity: 0.5; transform: translateX(20px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
+<div class="hero-section">
+    <h2>"Aksara adalah jembatan rasa, dari hati menuju hati lainnya."</h2>
+</div>
 
-        header {
-            padding: 60px 20px 20px;
-            text-align: center;
-        }
+<div class="grid-container">
+    <section>
+        <span class="section-title">Antologi Aksara</span>
+        {% for post in site.puisi reversed limit:1 %}
+        <article class="post-preview">
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <div class="post-excerpt">
+                {{ post.content | strip_html | truncatewords: 25 }}
+            </div>
+            <a href="{{ post.url }}" class="read-more">Baca Puisi &rarr;</a>
+        </article>
+        {% else %}
+        <p style="font-style: italic; color: #888;">Belum ada aksara yang terukir...</p>
+        {% endfor %}
+    </section>
 
-        .logo {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            letter-spacing: 0.2em;
-            margin: 0;
-            font-weight: normal;
-            text-transform: uppercase;
-        }
-
-        nav {
-            margin-top: 30px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 15px 0;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin: 0 15px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            padding: 5px;
-        }
-
-        nav a:hover, nav a:focus {
-            color: var(--accent-pink);
-            outline: 2px solid var(--accent-pink);
-            outline-offset: 4px;
-        }
-
-        /* Layout 2 Kolom */
-        main {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: 40px auto;
-            min-height: 60vh;
-        }
-
-        .column {
-            flex: 1;
-            min-width: 320px;
-            padding: 40px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .column-left {
-            border-right: 1px solid var(--border);
-        }
-
-        .label-kategori {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent-purple);
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            margin: 10px 0 20px;
-            font-weight: normal;
-            line-height: 1.2;
-        }
-
-        .excerpt {
-            font-style: italic;
-            color: #444;
-            margin-bottom: auto;
-        }
-
-        .btn-read {
-            display: inline-block;
-            margin-top: 30px;
-            color: var(--accent-pink);
-            text-decoration: none;
-            font-weight: bold;
-            border-bottom: 2px solid var(--accent-pink);
-            padding-bottom: 2px;
-            align-self: flex-start;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .column-left { border-right: none; border-bottom: 1px solid var(--border); }
-        }
-    </style>
-</head>
-<body>
-
-    <audio id="pageSound" preload="auto">
-        <source src="https://www.soundjay.com/misc/sounds/paper-flip-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <header role="banner">
-        <h1 class="logo">KANILA</h1>
-        <nav role="navigation" aria-label="Menu Utama">
-            <a href="/" onclick="playFlip()">Beranda</a>
-            <a href="/about.html" onclick="playFlip()">Tentang</a>
-            <a href="/kontak.html" onclick="playFlip()">Kontak</a>
-            <a href="/arsip.html" onclick="playFlip()">Arsip</a>
-        </nav>
-    </header>
-
-    <main id="content" role="main" class="page-transition">
-        <section class="column column-left" aria-labelledby="label-puisi">
-            <span id="label-puisi" class="label-kategori">Antologi Aksara</span>
-            <article>
-                <h2>Janji Kala Senja</h2>
-                <p class="excerpt">"Di ufuk yang memerah, aku menitipkan pesan pada angin. Bahwa rindu tak pernah benar-benar padam..."</p>
-                <a href="/puisi/janji-kala-senja.html" class="btn-read" onclick="playFlip()">Baca Puisi</a>
-            </article>
-        </section>
-
-        <section class="column" aria-labelledby="label-opini">
-            <span id="label-opini" class="label-kategori">Celoteh</span>
-            <article>
-                <h2>Menemukan Sunyi dalam Digital</h2>
-                <p class="excerpt">"Kadang kita perlu mematikan layar untuk menghidupkan jiwa. Di antara bising notifikasi, suara hati sering kali tenggelam..."</p>
-                <a href="/opini/menemukan-sunyi.html" class="btn-read" onclick="playFlip()">Baca Opini</a>
-            </article>
-        </section>
-    </main>
-
-    <footer role="contentinfo">
-        <p>Lakukan semua dengan hati, maka akan sampai juga pada hati.</p>
-        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">&copy; 2026 Banyu Kanila</p>
-    </footer>
-
-    <script>
-        function playFlip() {
-            var sound = document.getElementById("pageSound");
-            sound.play();
-        }
-    </script>
-
-</body>
-</html>
+    <section>
+        <span class="section-title">Celoteh</span>
+        {% for post in site.opini reversed limit:1 %}
+        <article class="post-preview">
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <div class="post-excerpt">
+                {{ post.content | strip_html | truncatewords: 25 }}
+            </div>
+            <a href="{{ post.url }}" class="read-more">Baca Celoteh &rarr;</a>
+        </article>
+        {% else %}
+        <p style="font-style: italic; color: #888;">Masih menunggu buah pikir...</p>
+        {% endfor %}
+    </section>
+</div>
