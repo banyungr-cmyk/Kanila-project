@@ -12,35 +12,73 @@
             --accent-pink: #A65D6A;
             --border: #E0DED7;
         }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-paper: #1A1A1A;
+                --text-dark: #E0E0E0;
+                --accent-purple: #A294B5;
+                --accent-pink: #D4A5AF;
+                --border: #333333;
+            }
+        }
+
+        /* Animasi Kertas (Paper Texture & Fade In) */
         body {
             font-family: 'Georgia', serif;
             background-color: var(--bg-paper);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); /* Tekstur Kertas */
             color: var(--text-dark);
-            margin: 0; padding: 0;
             line-height: 1.8;
             font-size: 1.15rem;
+            animation: fadeIn 1.5s ease-in;
         }
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; }
-        nav { margin-top: 20px; }
-        nav a { text-decoration: none; color: var(--text-dark); margin: 0 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
-        
-        main { max-width: 800px; margin: 60px auto; padding: 0 25px; }
-        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; }
-        .post-content { margin-top: 40px; text-align: justify; }
 
-        /* Navigasi Next/Prev */
-        .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.9rem; }
-        .post-nav a { text-decoration: none; color: var(--accent-pink); font-weight: bold; max-width: 45%; }
-        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; font-weight: bold; }
+        nav a { text-decoration: none; color: var(--text-dark); margin: 0 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        main { max-width: 800px; margin: 60px auto; padding: 0 25px; }
+
+        /* Fitur Share & Audio Bar */
+        .post-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .share-btn, .audio-btn {
+            background: none;
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-purple);
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .share-btn:hover, .audio-btn:hover {
+            background: var(--accent-purple);
+            color: white;
+        }
+
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
     </style>
 </head>
 <body>
 
     <header role="banner">
-        <a href="/" class="logo" aria-label="Halaman Utama Kanila">KANILA</a>
-        <nav role="navigation" aria-label="Menu Utama">
+        <a href="/" class="logo">KANILA</a>
+        <nav role="navigation">
             <a href="/">Beranda</a>
             <a href="/about.html">Tentang</a>
             <a href="/kontak.html">Kontak</a>
@@ -49,34 +87,54 @@
 
     <main id="main-content" role="main">
         <article>
-            {% if page.title %}
-                <h1>{{ page.title }}</h1>
-            {% endif %}
+            <h1>{{ page.title }}</h1>
+
+            <div class="post-tools">
+                <button class="audio-btn" onclick="speakContent()" aria-label="Dengarkan tulisan ini">
+                    🔊 Dengarkan Suara
+                </button>
+                <button class="share-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">
+                    🔗 Bagikan
+                </button>
+            </div>
             
-            <div class="post-content">
+            <div id="readable-content" class="post-content">
                 {{ content }}
             </div>
 
-            {% if page.collection %}
             <nav class="post-nav" aria-label="Navigasi Tulisan">
-                <div>
-                    {% if page.previous %}
-                        <a href="{{ page.previous.url }}" rel="prev">&larr; {{ page.previous.title }}</a>
-                    {% endif %}
-                </div>
-                <div>
-                    {% if page.next %}
-                        <a href="{{ page.next.url }}" rel="next">{{ page.next.title }} &rarr;</a>
-                    {% endif %}
+                <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+                    {% if page.previous %}<a href="{{ page.previous.url }}">&larr; {{ page.previous.title }}</a>{% endif %}
+                    {% if page.next %}<a href="{{ page.next.url }}">{{ page.next.title }} &rarr;</a>{% endif %}
                 </div>
             </nav>
-            {% endif %}
         </article>
     </main>
 
-    <footer role="contentinfo">
+    <script>
+        // Fitur Suara (Web Speech API) - Sangat Inklusif
+        function speakContent() {
+            const text = document.getElementById('readable-content').innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'id-ID';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Fitur Share (Web Share API)
+        function sharePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '{{ page.title }} - Banyu Kanila',
+                    url: window.location.href
+                });
+            } else {
+                alert('Salin tautan: ' + window.location.href);
+            }
+        }
+    </script>
+
+    <footer>
         <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
-        <p>&copy; 2026 Banyu Kanila</p>
     </footer>
 
 </body>
