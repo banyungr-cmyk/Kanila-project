@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanila | Jurnal Reflektif</title>
+    <title>Kanila | Jurnal Reflektif & Aksara</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
@@ -19,6 +19,7 @@
             --accent-color: #ff6b6b;
             --border-color: rgba(255,255,255,0.1);
         }
+        /* WCAG: Skip Link */
         .skip-link { position: absolute; top: -100px; left: 0; background: var(--accent-color); color: white; padding: 10px; z-index: 1000; }
         .skip-link:focus { top: 0; }
 
@@ -40,17 +41,17 @@
 
         .post-card { padding: 30px 0; border-bottom: 1px solid var(--border-color); }
         .post-card h3 { margin: 0 0 10px 0; color: var(--accent-color); font-size: 1.5rem; text-transform: capitalize; }
-        .post-meta { font-family: sans-serif; font-size: 0.8rem; opacity: 0.6; margin-bottom: 10px; display: block; }
+        .post-meta { font-family: sans-serif; font-size: 0.8rem; opacity: 0.6; margin-bottom: 5px; display: block; }
         
         .read-btn { 
             display: inline-block;
             margin-top: 10px;
-            padding: 8px 18px;
+            padding: 10px 20px;
             background-color: var(--accent-color);
             color: white !important;
             text-decoration: none;
             font-family: sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             border-radius: 4px;
         }
 
@@ -84,19 +85,19 @@
     <main id="main-content" role="main" tabindex="-1">
         <section id="tentang">
             <h2>Tentang Saya</h2>
-            <p>Seorang penulis yang mencintai organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis.</p>
+            <p>Seorang penulis yang bergerak di antara logika organisasi dan sunyinya aksara. Ruang ini adalah rumah bagi setiap celoteh kritis dan sajak melankolis.</p>
         </section>
 
         <blockquote aria-label="Kutipan">"Ada hal-hal yang hanya bisa dimengerti ketika kita berhenti bicara dan mulai menulis."</blockquote>
 
         <section id="celoteh">
             <h2>Celoteh</h2>
-            <div id="opini-container"> <p>Mencari berkas Celoteh di Kanila-project...</p> </div>
+            <div id="opini-container"> <p>Menghubungkan ke arsip Celoteh...</p> </div>
         </section>
 
         <section id="aksara">
             <h2>Antologi Aksara</h2>
-            <div id="puisi-container"> <p>Mencari baris Aksara di Kanila-project...</p> </div>
+            <div id="puisi-container"> <p>Menyusun baris Aksara...</p> </div>
         </section>
 
         <section id="kontak">
@@ -116,50 +117,56 @@
 
         async function loadPosts(folder, containerId) {
             const container = document.getElementById(containerId);
-            const userName = "BanyuNugraha";
-            const repoName = "Kanila-project"; // Sudah diperbarui sesuai nama repo Anda
+            
+            // DATA REPO YANG SUDAH DIVERIFIKASI
+            const user = "banyungr-cmyk";
+            const repo = "Kanila-project";
 
             try {
-                const res = await fetch(`https://api.github.com/repos/${userName}/${repoName}/contents/${folder}`);
-                if (!res.ok) throw new Error("Kosong");
+                // Menambahkan timestamp agar data selalu segar (anti-cache)
+                const url = `https://api.github.com/repos/${user}/${repo}/contents/${folder}?t=${new Date().getTime()}`;
+                const res = await fetch(url);
+                
+                if (!res.ok) throw new Error("Folder tidak ditemukan");
                 const files = await res.json();
                 
+                // Menyaring file dokumen (.md, .docx, .txt)
                 const validFiles = files.filter(f => 
-                    f.name.endsWith('.md') || 
-                    f.name.endsWith('.docx') || 
-                    f.name.endsWith('.txt')
+                    f.name.toLowerCase().endsWith('.md') || 
+                    f.name.toLowerCase().endsWith('.docx') || 
+                    f.name.toLowerCase().endsWith('.txt')
                 ).reverse();
                 
                 if (validFiles.length > 0) {
                     container.innerHTML = "";
                     for (let file of validFiles) {
+                        // Menghilangkan ekstensi untuk judul yang bersih
                         const title = file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' ');
-                        const extension = file.name.split('.').pop().toUpperCase();
+                        const ext = file.name.split('.').pop().toUpperCase();
                         const article = document.createElement('article');
                         article.className = 'post-card';
                         
-                        let actionText = "Baca Tulisan";
-                        if (extension === 'DOCX') actionText = "Buka Dokumen Word";
+                        let btnLabel = "Baca Tulisan";
+                        if (ext === 'DOCX') btnLabel = "Buka Dokumen Word";
 
                         article.innerHTML = `
-                            <span class="post-meta">Format: ${extension}</span>
+                            <span class="post-meta">Format Dokumen: ${ext}</span>
                             <h3>${title}</h3>
                             <a href="${file.html_url}" target="_blank" class="read-btn">
-                                ${actionText} <span class="sr-only">tentang ${title}</span>
+                                ${btnLabel} <span class="sr-only">tentang ${title}</span>
                             </a>
                         `;
                         container.appendChild(article);
                     }
                 } else {
-                    container.innerHTML = "<p>Folder " + folder + " ditemukan, tapi belum ada file di dalamnya.</p>";
+                    container.innerHTML = "<p>Folder ditemukan, namun belum ada dokumen di dalamnya.</p>";
                 }
             } catch (e) {
-                container.innerHTML = "<p>Belum ada arsip di folder " + folder + ".</p>";
+                container.innerHTML = "<p>Menunggu dokumen diunggah ke folder " + folder + "...</p>";
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Memastikan memanggil folder yang sesuai di GitHub Anda
             loadPosts('_opini', 'opini-container');
             loadPosts('_puisi', 'puisi-container');
         });
