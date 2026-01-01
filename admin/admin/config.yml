@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "opini"
+    label: "Celoteh"
+    folder: "_opini"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Judul", name: "title", widget: "string"}
+      - {label: "Tanggal", name: "date", widget: "datetime"}
+      - {label: "Isi Tulisan", name: "body", widget: "markdown"}
+
+  - name: "puisi"
+    label: "Antologi Aksara"
+    folder: "_puisi"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Judul", name: "title", widget: "string"}
+      - {label: "Isi Puisi", name: "body", widget: "markdown"}
