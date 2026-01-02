@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Kanila - Tulisan penuh makna.">
+    <meta name="author" content="Banyu Kanila">
     <title>{{ page.title }} | KANILA</title>
     <style>
         :root {
@@ -11,6 +13,7 @@
             --accent-purple: #745E8D;
             --accent-pink: #A65D6A;
             --border: #E0DED7;
+            --selection-bg: #D4A5AF;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -20,19 +23,46 @@
                 --accent-purple: #A294B5;
                 --accent-pink: #D4A5AF;
                 --border: #333333;
+                --selection-bg: #745E8D;
             }
+        }
+
+        /* PERBAIKAN: Seleksi teks agar sesuai tema */
+        ::selection {
+            background: var(--selection-bg);
+            color: white;
         }
 
         body {
             font-family: 'Georgia', serif;
             background-color: var(--bg-paper);
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            /* FITUR BARU: Agar tekstur menyatu sempurna di dark mode */
+            background-blend-mode: overlay;
             color: var(--text-dark);
             line-height: 1.8;
             margin: 0; padding: 0;
             opacity: 0;
             animation: paperOpen 1.2s forwards ease-out;
             transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        /* FITUR BARU: Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 10000;
+        }
+        .progress-bar {
+            height: 4px;
+            background: var(--accent-pink);
+            width: 0%;
+            transition: width 0.1s;
         }
 
         @keyframes paperOpen {
@@ -40,7 +70,6 @@
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
 
-        /* PERBAIKAN: Teks Skip Link yang benar */
         .skip-link {
             position: absolute;
             top: -100px; left: 10px;
@@ -50,31 +79,68 @@
             z-index: 9999;
             text-decoration: none;
             border-radius: 5px;
+            transition: top 0.3s;
         }
         .skip-link:focus { top: 10px; }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: relative; }
         .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; font-weight: bold; }
+        
         nav { margin-top: 20px; }
         nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
         nav a:focus { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
 
         main { max-width: 800px; margin: 60px auto; padding: 0 25px; min-height: 60vh; outline: none; }
-        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; }
+        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; margin-bottom: 10px; }
 
-        .post-tools { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; }
-        .tool-btn { background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        /* FITUR BARU: Meta info artikel */
+        .meta-info { text-align: center; font-size: 0.9rem; color: var(--accent-pink); margin-bottom: 30px; font-style: italic; }
+
+        .post-tools { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; justify-content: center; }
+        .tool-btn { background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
         .tool-btn:hover, .tool-btn:focus { background: var(--accent-purple); color: white; }
+        .tool-btn.active { background: var(--accent-pink); border-color: var(--accent-pink); color: white; }
 
         .post-content { text-align: justify; margin-bottom: 60px; font-size: 1.2rem; }
+        .post-content img { max-width: 100%; height: auto; border-radius: 5px; margin: 20px 0; }
 
         .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
-        .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; }
+        .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; transition: transform 0.2s; }
+        .post-nav a:hover { background-color: rgba(116, 94, 141, 0.05); transform: translateY(-2px); }
 
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
+
+        /* FITUR BARU: Tombol Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-purple);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { transform: translateY(-3px); background: var(--accent-pink); }
+
     </style>
 </head>
 <body>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgress"></div>
+    </div>
 
     <a href="#main-content" class="skip-link">Loncat ke Konten Utama</a>
 
@@ -95,8 +161,14 @@
         <article>
             <h1>{{ page.title }}</h1>
             
+            <div class="meta-info">
+                <span id="readingTime"></span> menit baca
+            </div>
+            
             <div class="post-tools">
-                <button class="tool-btn" onclick="speakContent()" aria-label="Dengarkan tulisan ini">🔊 Dengarkan</button>
+                <button id="btnSpeak" class="tool-btn" onclick="toggleSpeech()" aria-label="Dengarkan atau hentikan suara">
+                    <span id="iconSpeak">🔊</span> <span id="textSpeak">Dengarkan</span>
+                </button>
                 <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">🔗 Bagikan</button>
                 <button class="tool-btn" onclick="changeFontSize(1)" aria-label="Perbesar teks">A+</button>
                 <button class="tool-btn" onclick="changeFontSize(-1)" aria-label="Perkecil teks">A-</button>
@@ -113,39 +185,117 @@
         </article>
     </main>
 
+    <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()" aria-label="Kembali ke atas">
+        &uarr;
+    </button>
+
+    <footer>
+        <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
+        <p>&copy; 2026 Banyu Kanila</p>
+    </footer>
+
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const paperAudio = document.getElementById('paperSound');
-            paperAudio.play().catch(() => { console.log("Interaksi dibutuhkan untuk audio"); });
+            // Mencoba play, jika diblokir browser diam saja (tidak error merah)
+            paperAudio.play().catch(() => { console.log("Autoplay dicegah oleh browser, membutuhkan interaksi."); });
+            
+            calculateReadingTime();
         });
+
+        // FITUR BARU: Progress Bar Logic
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("readingProgress").style.width = scrolled + "%";
+
+            // Logic Back to Top Visibility
+            const backBtn = document.getElementById('backToTopBtn');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backBtn.classList.add('visible');
+            } else {
+                backBtn.classList.remove('visible');
+            }
+        };
+
+        // FITUR BARU: Scroll to Top Function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // FITUR BARU: Estimasi Waktu Baca
+        function calculateReadingTime() {
+            const text = document.getElementById('contentToRead').innerText;
+            const wpm = 200; // Rata-rata kecepatan baca
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            document.getElementById('readingTime').innerText = time;
+        }
 
         let currentFontSize = 1.2;
         function changeFontSize(delta) {
             currentFontSize += delta * 0.1;
+            // Batasi ukuran font agar tidak terlalu ekstrim
+            if (currentFontSize < 0.8) currentFontSize = 0.8;
+            if (currentFontSize > 2.0) currentFontSize = 2.0;
             document.getElementById('contentToRead').style.fontSize = currentFontSize + 'rem';
         }
 
-        function speakContent() {
-            const text = document.getElementById('contentToRead').innerText;
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'id-ID';
-            window.speechSynthesis.speak(utterance);
+        // PERBAIKAN: Logic Bicara dengan Toggle (Start/Stop)
+        let isSpeaking = false;
+        const synth = window.speechSynthesis;
+        let utterance = null;
+
+        function toggleSpeech() {
+            const btn = document.getElementById('btnSpeak');
+            const icon = document.getElementById('iconSpeak');
+            const textLabel = document.getElementById('textSpeak');
+
+            if (synth.speaking && isSpeaking) {
+                // Jika sedang bicara, batalkan
+                synth.cancel();
+                isSpeaking = false;
+                btn.classList.remove('active');
+                icon.innerText = "🔊";
+                textLabel.innerText = "Dengarkan";
+            } else {
+                // Jika tidak bicara, mulai bicara
+                // Batalkan antrian sebelumnya jika ada
+                synth.cancel(); 
+                
+                const text = document.getElementById('contentToRead').innerText;
+                utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                
+                // Event ketika selesai bicara otomatis
+                utterance.onend = function() {
+                    isSpeaking = false;
+                    btn.classList.remove('active');
+                    icon.innerText = "🔊";
+                    textLabel.innerText = "Dengarkan";
+                };
+
+                synth.speak(utterance);
+                isSpeaking = true;
+                btn.classList.add('active');
+                icon.innerText = "⏹️";
+                textLabel.innerText = "Berhenti";
+            }
         }
 
         function sharePage() {
             if (navigator.share) {
-                navigator.share({ title: '{{ page.title }}', url: window.location.href });
+                navigator.share({ title: '{{ page.title }}', url: window.location.href })
+                .catch(console.error);
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                alert('Tautan disalin.');
+                // Mengganti alert dengan notifikasi yang lebih halus di button (opsional), 
+                // tapi tetap pakai alert agar sesuai request fitur lama.
+                alert('Tautan telah disalin ke clipboard.');
             }
         }
     </script>
-
-    <footer>
-        <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
-        <p>&copy; © 2026 Banyu Kanila</p>
-    </footer>
 
 </body>
 </html>
