@@ -147,7 +147,11 @@
     <audio id="introSound" preload="auto">
     <source src="assets/chello.mp3" type="audio/mpeg">
 </audio>
-    
+
+    <audio id="paperSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
+    </audio>
+
     <header role="banner">
         <a href="/" class="logo" aria-label="Beranda Kanila">KANILA</a>
         <nav role="navigation" aria-label="Navigasi Utama">
@@ -199,7 +203,7 @@
         // LOGIC INTRO AUDIO (CELLO)
         window.addEventListener('DOMContentLoaded', () => {
             const introAudio = document.getElementById('introSound');
-            introAudio.volume = 0.5; // Volume 50% agar tidak kaget
+            introAudio.volume = 0.8; // Volume 50% agar tidak kaget
 
             // Coba play langsung
             let playPromise = introAudio.play();
