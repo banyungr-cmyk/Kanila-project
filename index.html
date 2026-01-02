@@ -27,7 +27,7 @@ title: Beranda
 <div class="grid-container">
     <section>
         <span class="section-title">Antologi Aksara</span>
-        {% for post in site.puisi reversed limit:1 %}
+        {% for post in site.puisi limit:1 %}
         <article class="post-preview">
             <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
             <div class="post-excerpt">
@@ -42,7 +42,7 @@ title: Beranda
 
     <section>
         <span class="section-title">Celoteh</span>
-        {% for post in site.opini reversed limit:1 %}
+        {% for post in site.opini limit:1 %}
         <article class="post-preview">
             <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
             <div class="post-excerpt">
