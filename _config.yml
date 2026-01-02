@@ -1,22 +1,24 @@
 title: KANILA
 description: "Ruang kontemplasi Banyu Kanila. Lakukan semua dengan hati, maka akan sampai juga pada hati."
-baseurl: "" 
+baseurl: ""
 url: "https://kanila.web.id"
-
-# Pengaturan Koleksi Tulisan
-collections:
-  puisi:
-    output: true
-    permalink: /puisi/:path/
-  opini:
-    output: true
-    permalink: /opini/:path/
 
 # Pengaturan Markdown
 markdown: kramdown
 highlighter: rouge
+
+# File yang diabaikan (tidak ikut di-upload/build)
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
   - vendor/
+
+# Pengaturan Koleksi Tulisan (Cukup ditulis satu kali di sini)
+collections:
+  puisi:
+    output: true
+    permalink: /puisi/:title/
+  opini:
+    output: true
+    permalink: /opini/:title/
