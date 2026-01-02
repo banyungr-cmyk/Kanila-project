@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Blog Kanila - Tulisan penuh makna.">
-    <meta name="author" content="Banyu Kanila">
     <title>{{ page.title }} | KANILA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg-paper: #FDFCF8;
@@ -27,113 +28,112 @@
             }
         }
 
-        /* PERBAIKAN: Seleksi teks agar sesuai tema */
-        ::selection {
-            background: var(--selection-bg);
-            color: white;
-        }
+        ::selection { background: var(--selection-bg); color: white; }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Georgia', serif; /* Font default yang elegan */
             background-color: var(--bg-paper);
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            /* FITUR BARU: Agar tekstur menyatu sempurna di dark mode */
             background-blend-mode: overlay;
             color: var(--text-dark);
             line-height: 1.8;
             margin: 0; padding: 0;
             opacity: 0;
             animation: paperOpen 1.2s forwards ease-out;
-            transition: background-color 0.3s, color 0.3s;
-            position: relative;
+            transition: all 0.3s ease; /* Transisi halus saat ganti font */
         }
 
-        /* FITUR BARU: Progress Bar */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: transparent;
-            z-index: 10000;
+        /* FITUR BARU: Mode Ramah Disleksia */
+        /* Menggunakan Comic Sans MS atau font sans-serif yang jelas */
+        body.dyslexia-mode {
+            font-family: 'Comic Sans MS', 'Verdana', sans-serif !important;
+            line-height: 2.4 !important; /* Jarak baris lebih lebar */
+            word-spacing: 0.1em;
+            letter-spacing: 0.05em;
         }
-        .progress-bar {
-            height: 4px;
-            background: var(--accent-pink);
-            width: 0%;
-            transition: width 0.1s;
+        
+        /* Judul juga berubah agar konsisten mudah dibaca */
+        body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode a {
+            font-family: 'Comic Sans MS', 'Verdana', sans-serif !important;
+            letter-spacing: 0.02em;
         }
 
         @keyframes paperOpen {
-            0% { opacity: 0; transform: scale(0.98) rotate(-0.5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
+        /* Progress Bar */
+        .progress-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            background: transparent; z-index: 10000;
+        }
+        .progress-bar { height: 4px; background: var(--accent-pink); width: 0%; transition: width 0.1s; }
+
         .skip-link {
-            position: absolute;
-            top: -100px; left: 10px;
-            background: var(--accent-purple);
-            color: white;
-            padding: 10px 20px;
-            z-index: 9999;
-            text-decoration: none;
-            border-radius: 5px;
+            position: absolute; top: -100px; left: 10px;
+            background: var(--accent-purple); color: white; padding: 10px 20px;
+            z-index: 9999; text-decoration: none; border-radius: 5px;
             transition: top 0.3s;
         }
         .skip-link:focus { top: 10px; }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: relative; }
-        .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; font-weight: bold; }
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        
+        /* Font Judul Artistik */
+        .logo { 
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem; letter-spacing: 0.1em; text-decoration: none; 
+            color: var(--text-dark); text-transform: uppercase; font-weight: bold; 
+        }
         
         nav { margin-top: 20px; }
         nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
         nav a:focus { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
 
         main { max-width: 800px; margin: 60px auto; padding: 0 25px; min-height: 60vh; outline: none; }
-        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; margin-bottom: 10px; }
+        
+        h1 { 
+            font-family: 'Playfair Display', serif;
+            font-weight: 700; font-style: italic;
+            font-size: 2.8rem; color: var(--accent-purple); text-align: center; margin-bottom: 10px; 
+        }
 
-        /* FITUR BARU: Meta info artikel */
         .meta-info { text-align: center; font-size: 0.9rem; color: var(--accent-pink); margin-bottom: 30px; font-style: italic; }
 
         .post-tools { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; justify-content: center; }
-        .tool-btn { background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+        
+        .tool-btn { 
+            background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); 
+            padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; 
+            display: flex; align-items: center; gap: 5px; font-family: sans-serif;
+        }
         .tool-btn:hover, .tool-btn:focus { background: var(--accent-purple); color: white; }
         .tool-btn.active { background: var(--accent-pink); border-color: var(--accent-pink); color: white; }
 
         .post-content { text-align: justify; margin-bottom: 60px; font-size: 1.2rem; }
         .post-content img { max-width: 100%; height: auto; border-radius: 5px; margin: 20px 0; }
 
+        /* Kelas khusus Puisi (Saran Profesor sebelumnya) */
+        .content-poetry {
+            text-align: center; font-style: italic; margin: 40px 0; line-height: 2.2; color: var(--text-dark);
+        }
+
         .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
         .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; transition: transform 0.2s; }
-        .post-nav a:hover { background-color: rgba(116, 94, 141, 0.05); transform: translateY(-2px); }
+        .post-nav a:hover { transform: translateY(-2px); }
 
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
 
-        /* FITUR BARU: Tombol Back to Top */
         .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--accent-purple);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent-purple); color: white; width: 45px; height: 45px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; opacity: 0; pointer-events: none; transition: 0.3s; border: none; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 1.2rem;
         }
         .back-to-top.visible { opacity: 1; pointer-events: auto; }
         .back-to-top:hover { transform: translateY(-3px); background: var(--accent-pink); }
-
     </style>
 </head>
 <body>
@@ -144,8 +144,8 @@
 
     <a href="#main-content" class="skip-link">Loncat ke Konten Utama</a>
 
-    <audio id="paperSound" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
+    <audio id="introSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/133/133-preview.mp3" type="audio/mpeg">
     </audio>
 
     <header role="banner">
@@ -166,9 +166,10 @@
             </div>
             
             <div class="post-tools">
-                <button id="btnSpeak" class="tool-btn" onclick="toggleSpeech()" aria-label="Dengarkan atau hentikan suara">
-                    <span id="iconSpeak">🔊</span> <span id="textSpeak">Dengarkan</span>
+                <button id="btnDyslexia" class="tool-btn" onclick="toggleDyslexia()" aria-label="Ubah font agar mudah dibaca penderita disleksia">
+                    <span>👁️</span> Mode Baca Mudah
                 </button>
+
                 <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">🔗 Bagikan</button>
                 <button class="tool-btn" onclick="changeFontSize(1)" aria-label="Perbesar teks">A+</button>
                 <button class="tool-btn" onclick="changeFontSize(-1)" aria-label="Perkecil teks">A-</button>
@@ -195,22 +196,51 @@
     </footer>
 
     <script>
+        // LOGIC INTRO AUDIO (CELLO)
         window.addEventListener('DOMContentLoaded', () => {
-            const paperAudio = document.getElementById('paperSound');
-            // Mencoba play, jika diblokir browser diam saja (tidak error merah)
-            paperAudio.play().catch(() => { console.log("Autoplay dicegah oleh browser, membutuhkan interaksi."); });
+            const introAudio = document.getElementById('introSound');
+            introAudio.volume = 0.5; // Volume 50% agar tidak kaget
+
+            // Coba play langsung
+            let playPromise = introAudio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay dicegah browser. Menunggu interaksi pertama.");
+                    // Jika dicegah, pasang 'jebakan' agar bunyi saat user klik/tekan tombol pertama kali
+                    const playOnInteraction = () => {
+                        introAudio.play();
+                        // Hapus listener setelah bunyi sekali agar tidak berulang
+                        window.removeEventListener('click', playOnInteraction);
+                        window.removeEventListener('keydown', playOnInteraction);
+                    };
+                    window.addEventListener('click', playOnInteraction);
+                    window.addEventListener('keydown', playOnInteraction);
+                });
+            }
             
             calculateReadingTime();
         });
 
-        // FITUR BARU: Progress Bar Logic
+        // LOGIC DISLEKSIA MODE
+        function toggleDyslexia() {
+            document.body.classList.toggle('dyslexia-mode');
+            const btn = document.getElementById('btnDyslexia');
+            // Toggle status aktif pada tombol
+            if (document.body.classList.contains('dyslexia-mode')) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        // Logic Scroll Progress & Back to Top
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("readingProgress").style.width = scrolled + "%";
 
-            // Logic Back to Top Visibility
             const backBtn = document.getElementById('backToTopBtn');
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 backBtn.classList.add('visible');
@@ -219,15 +249,13 @@
             }
         };
 
-        // FITUR BARU: Scroll to Top Function
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // FITUR BARU: Estimasi Waktu Baca
         function calculateReadingTime() {
             const text = document.getElementById('contentToRead').innerText;
-            const wpm = 200; // Rata-rata kecepatan baca
+            const wpm = 200; 
             const words = text.trim().split(/\s+/).length;
             const time = Math.ceil(words / wpm);
             document.getElementById('readingTime').innerText = time;
@@ -236,63 +264,17 @@
         let currentFontSize = 1.2;
         function changeFontSize(delta) {
             currentFontSize += delta * 0.1;
-            // Batasi ukuran font agar tidak terlalu ekstrim
             if (currentFontSize < 0.8) currentFontSize = 0.8;
             if (currentFontSize > 2.0) currentFontSize = 2.0;
             document.getElementById('contentToRead').style.fontSize = currentFontSize + 'rem';
         }
 
-        // PERBAIKAN: Logic Bicara dengan Toggle (Start/Stop)
-        let isSpeaking = false;
-        const synth = window.speechSynthesis;
-        let utterance = null;
-
-        function toggleSpeech() {
-            const btn = document.getElementById('btnSpeak');
-            const icon = document.getElementById('iconSpeak');
-            const textLabel = document.getElementById('textSpeak');
-
-            if (synth.speaking && isSpeaking) {
-                // Jika sedang bicara, batalkan
-                synth.cancel();
-                isSpeaking = false;
-                btn.classList.remove('active');
-                icon.innerText = "🔊";
-                textLabel.innerText = "Dengarkan";
-            } else {
-                // Jika tidak bicara, mulai bicara
-                // Batalkan antrian sebelumnya jika ada
-                synth.cancel(); 
-                
-                const text = document.getElementById('contentToRead').innerText;
-                utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'id-ID';
-                
-                // Event ketika selesai bicara otomatis
-                utterance.onend = function() {
-                    isSpeaking = false;
-                    btn.classList.remove('active');
-                    icon.innerText = "🔊";
-                    textLabel.innerText = "Dengarkan";
-                };
-
-                synth.speak(utterance);
-                isSpeaking = true;
-                btn.classList.add('active');
-                icon.innerText = "⏹️";
-                textLabel.innerText = "Berhenti";
-            }
-        }
-
         function sharePage() {
             if (navigator.share) {
-                navigator.share({ title: '{{ page.title }}', url: window.location.href })
-                .catch(console.error);
+                navigator.share({ title: '{{ page.title }}', url: window.location.href }).catch(console.error);
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                // Mengganti alert dengan notifikasi yang lebih halus di button (opsional), 
-                // tapi tetap pakai alert agar sesuai request fitur lama.
-                alert('Tautan telah disalin ke clipboard.');
+                alert('Tautan disalin.');
             }
         }
     </script>
