@@ -15,6 +15,12 @@
             --accent-pink: #A65D6A;
             --border: #E0DED7;
             --selection-bg: #D4A5AF;
+            /* PENYESUAIAN KHUSUS HP (Mobile) */
+        @media (max-width: 600px) {
+            main { margin: 30px auto; padding: 0 20px; } /* Margin lebih tipis */
+            h1 { font-size: 2rem; } /* Ukuran judul sedikit mengecil agar pas */
+            header { padding: 20px 10px; } /* Header lebih ringkas */
+            .logo { font-size: 1.8rem; } /* Logo menyesuaikan */
         }
 
         @media (prefers-color-scheme: dark) {
