@@ -1,0 +1,25 @@
+---
+layout: default
+title: Arsip Tulisan
+---
+
+<h1>Arsip Tulisan</h1>
+
+<div style="max-width: 100%; margin-bottom: 60px;">
+    <p style="text-align: center; font-style: italic; margin-bottom: 40px;">
+        "Jejak langkah yang pernah terlewati."
+    </p>
+
+    <ul class="archive-list">
+        {% for post in site.posts %}
+        <li class="archive-item">
+            <a href="{{ post.url }}" class="archive-title">{{ post.title }}</a>
+            <span class="archive-date">{{ post.date | date: "%d %b %Y" }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+    .meta-info, .post-tools, .post-nav { display: none !important; }
+</style>
