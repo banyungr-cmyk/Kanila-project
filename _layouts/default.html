@@ -1,151 +1,93 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | KANILA</title>
-    <style>
-        :root {
-            --bg-paper: #FDFCF8;
-            --text-dark: #2C2C2C;
-            --accent-purple: #745E8D;
-            --accent-pink: #A65D6A;
-            --border: #E0DED7;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Website Kanila - konten kreatif dan informatif">
+  <title>{{ page.title }} | KANILA</title>
+  <style>
+    :root {
+      --bg-paper: #FDFCF8;
+      --text-dark: #2C2C2C;
+      --accent-purple: #745E8D;
+      --accent-pink: #A65D6A;
+      --border: #E0DED7;
+    }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-paper: #1A1A1A;
-                --text-dark: #E0E0E0;
-                --accent-purple: #A294B5;
-                --accent-pink: #D4A5AF;
-                --border: #333333;
-            }
-        }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-paper: #1A1A1A;
+        --text-dark: #E0E0E0;
+        --accent-purple: #A294B5;
+        --accent-pink: #D4A5AF;
+        --border: #333333;
+      }
+    }
 
-        body {
-            font-family: 'Georgia', serif;
-            background-color: var(--bg-paper);
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            color: var(--text-dark);
-            line-height: 1.8;
-            margin: 0; padding: 0;
-            opacity: 0;
-            animation: paperOpen 1.2s forwards ease-out;
-            transition: background-color 0.3s, color 0.3s;
-        }
+    body {
+      font-family: Georgia, serif;
+      background-color: var(--bg-paper, #fff);
+      background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+      background-repeat: repeat;
+      background-size: auto;
+      color: var(--text-dark, #000);
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      opacity: 0;
+      animation: paperOpen 1.2s forwards ease-out;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-        @keyframes paperOpen {
-            0% { opacity: 0; transform: scale(0.98) rotate(-0.5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
+    @keyframes paperOpen {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        /* PERBAIKAN: Teks Skip Link yang benar */
-        .skip-link {
-            position: absolute;
-            top: -100px; left: 10px;
-            background: var(--accent-purple);
-            color: white;
-            padding: 10px 20px;
-            z-index: 9999;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .skip-link:focus { top: 10px; }
+    header, footer {
+      background-color: var(--accent-purple);
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 2.2rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text-dark); text-transform: uppercase; font-weight: bold; }
-        nav { margin-top: 20px; }
-        nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-        nav a:focus { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
 
-        main { max-width: 800px; margin: 60px auto; padding: 0 25px; min-height: 60vh; outline: none; }
-        h1 { font-weight: normal; font-size: 2.5rem; color: var(--accent-purple); text-align: center; }
+    a {
+      color: var(--accent-pink);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
 
-        .post-tools { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 15px; }
-        .tool-btn { background: none; border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
-        .tool-btn:hover, .tool-btn:focus { background: var(--accent-purple); color: white; }
+    a:hover {
+      color: var(--accent-purple);
+    }
 
-        .post-content { text-align: justify; margin-bottom: 60px; font-size: 1.2rem; }
-
-        .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
-        .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; }
-
-        footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
-    </style>
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>KANILA</h1>
+  </header>
 
-    <a href="#main-content" class="skip-link">Loncat ke Konten Utama</a>
+  <main>
+    <h2>{{ page.title }}</h2>
+    <p>Selamat datang di halaman Kanila. Konten akan ditampilkan di sini.</p>
+    <hr>
+    {{ content }}
+  </main>
 
-    <audio id="paperSound" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
-    </audio>
-
-    <header role="banner">
-        <a href="/" class="logo" aria-label="Beranda Kanila">KANILA</a>
-        <nav role="navigation" aria-label="Navigasi Utama">
-            <a href="/">Beranda</a>
-            <a href="/about.html">Tentang</a>
-            <a href="/kontak.html">Kontak</a>
-        </nav>
-    </header>
-
-    <main id="main-content" role="main" tabindex="-1">
-        <article>
-            <h1>{{ page.title }}</h1>
-            
-            <div class="post-tools">
-                <button class="tool-btn" onclick="speakContent()" aria-label="Dengarkan tulisan ini">🔊 Dengarkan</button>
-                <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">🔗 Bagikan</button>
-                <button class="tool-btn" onclick="changeFontSize(1)" aria-label="Perbesar teks">A+</button>
-                <button class="tool-btn" onclick="changeFontSize(-1)" aria-label="Perkecil teks">A-</button>
-            </div>
-
-            <div id="contentToRead" class="post-content">
-                {{ content }}
-            </div>
-
-            <nav class="post-nav" aria-label="Navigasi Tulisan">
-                <div>{% if page.previous %}<a href="{{ page.previous.url }}">&larr; {{ page.previous.title }}</a>{% endif %}</div>
-                <div>{% if page.next %}<a href="{{ page.next.url }}">{{ page.next.title }} &rarr;</a>{% endif %}</div>
-            </nav>
-        </article>
-    </main>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const paperAudio = document.getElementById('paperSound');
-            paperAudio.play().catch(() => { console.log("Interaksi dibutuhkan untuk audio"); });
-        });
-
-        let currentFontSize = 1.2;
-        function changeFontSize(delta) {
-            currentFontSize += delta * 0.1;
-            document.getElementById('contentToRead').style.fontSize = currentFontSize + 'rem';
-        }
-
-        function speakContent() {
-            const text = document.getElementById('contentToRead').innerText;
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'id-ID';
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function sharePage() {
-            if (navigator.share) {
-                navigator.share({ title: '{{ page.title }}', url: window.location.href });
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Tautan disalin.');
-            }
-        }
-    </script>
-
-    <footer>
-        <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
-        <p>&copy; © 2026 Banyu Kanila</p>
-    </footer>
-
+  <footer>
+    <p>&copy; 2026 KANILA. Semua hak dilindungi.</p>
+  </footer>
 </body>
 </html>
