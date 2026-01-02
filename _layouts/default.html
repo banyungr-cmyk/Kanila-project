@@ -5,74 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Website Kanila - konten kreatif dan informatif">
   <title>{{ page.title }} | KANILA</title>
-  <style>
-    :root {
-      --bg-paper: #FDFCF8;
-      --text-dark: #2C2C2C;
-      --accent-purple: #745E8D;
-      --accent-pink: #A65D6A;
-      --border: #E0DED7;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-paper: #1A1A1A;
-        --text-dark: #E0E0E0;
-        --accent-purple: #A294B5;
-        --accent-pink: #D4A5AF;
-        --border: #333333;
-      }
-    }
-
-    body {
-      font-family: Georgia, serif;
-      background-color: var(--bg-paper, #fff);
-      background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-      background-repeat: repeat;
-      background-size: auto;
-      color: var(--text-dark, #000);
-      line-height: 1.8;
-      margin: 0;
-      padding: 0;
-      opacity: 0;
-      animation: paperOpen 1.2s forwards ease-out;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    @keyframes paperOpen {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    header, footer {
-      background-color: var(--accent-purple);
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    a {
-      color: var(--accent-pink);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    a:hover {
-      color: var(--accent-purple);
-    }
-
-    hr {
-      border: 0;
-      border-top: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-  </style>
+  <!-- Panggil file CSS eksternal -->
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
   <header>
@@ -87,7 +21,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 KANILA. Semua hak dilindungi.</p>
+    <p>&copy; © 2026 KANILA. .</p>
   </footer>
 </body>
 </html>
