@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Banyu Kanila - Berbagi kisah lewat aksara.">
+    <meta name="description" content="Banyu Kanila - Berbagi kisah lewat rangkaian aksara.">
     <title>{{ page.title }} | KANILA</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
@@ -39,25 +39,16 @@
             line-height: 1.8;
             margin: 0; padding: 0;
             
-            /* ANIMASI "MEMBUKA BUKU" (PAPER UNFOLD) */
-            /* Dimulai dengan opacity 0, lalu perlahan muncul */
+            /* Animasi Kertas Terbuka */
             opacity: 0; 
-            transform-origin: top center; /* Titik lipatan di atas */
+            transform-origin: top center;
             animation: paperUnfold 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            
             transition: background-color 0.3s ease;
         }
 
-        /* Definisi Animasi Kertas Terbuka */
         @keyframes paperUnfold {
-            0% { 
-                opacity: 0; 
-                transform: perspective(1000px) rotateX(-5deg) scale(0.98) translateY(-20px); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0); 
-            }
+            0% { opacity: 0; transform: perspective(1000px) rotateX(-5deg) scale(0.98) translateY(-20px); }
+            100% { opacity: 1; transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0); }
         }
 
         /* Mode Disleksia */
@@ -133,9 +124,10 @@
         .archive-title { text-decoration: none; color: var(--text-dark); font-weight: bold; font-size: 1.1rem; }
         .archive-date { color: var(--accent-pink); font-size: 0.9rem; font-style: italic; margin-left: 20px; min-width: 100px; text-align: right; }
 
+        /* Style Navigasi Tombol Next/Prev */
         .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
         .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; transition: transform 0.2s; }
-        .post-nav a:hover { transform: translateY(-2px); }
+        .post-nav a:hover { transform: translateY(-2px); background-color: rgba(116, 94, 141, 0.05); }
 
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
 
@@ -158,9 +150,11 @@
 
     <a href="#main-content" class="skip-link">Loncat ke Konten Utama</a>
 
+    {% if page.url == "/" %}
     <audio id="introSound" preload="auto">
         <source src="assets/chello.mp3" type="audio/mpeg">
     </audio>
+    {% endif %}
 
     <audio id="paperSound" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
@@ -178,7 +172,30 @@
 
     <main id="main-content" role="main" tabindex="-1">
         <article>
-            {{ content }}
+            <h1>{{ page.title }}</h1>
+            
+            <div class="meta-info">
+                <span id="readingTime"></span> menit baca
+            </div>
+            
+            <div class="post-tools">
+                <button id="btnDyslexia" class="tool-btn" onclick="toggleDyslexia()" aria-label="Ubah font agar mudah dibaca penderita disleksia">
+                    <span aria-hidden="true">👁️</span> Mode Baca Mudah
+                </button>
+                <button class="tool-btn" onclick="sharePage()" aria-label="Bagikan tulisan ini">🔗 Bagikan</button>
+                <button class="tool-btn" onclick="changeFontSize(1)" aria-label="Perbesar teks">A+</button>
+                <button class="tool-btn" onclick="changeFontSize(-1)" aria-label="Perkecil teks">A-</button>
+            </div>
+
+            <div id="contentToRead" class="post-content">
+                {{ content }}
+            </div>
+
+            <nav class="post-nav" aria-label="Navigasi Tulisan">
+                <div>{% if page.previous %}<a href="{{ page.previous.url }}">&larr; {{ page.previous.title }}</a>{% endif %}</div>
+                <div>{% if page.next %}<a href="{{ page.next.url }}">{{ page.next.title }} &rarr;</a>{% endif %}</div>
+            </nav>
+
         </article>
     </main>
 
@@ -193,40 +210,35 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // FUNGSI 1: MEMUTAR SIMFONI AUDIO
             playAtmosphere();
-
-            // FUNGSI 2: MENGHITUNG WAKTU BACA
             calculateReadingTime();
         });
 
         function playAtmosphere() {
+            // Cello mungkin null (tidak ada) jika bukan di beranda
             const cello = document.getElementById('introSound');
+            // Kertas selalu ada
             const paper = document.getElementById('paperSound');
 
-            // Set Volume: Kertas lebih keras agar terdengar 'krrrek'-nya, Cello lembut
-            if(paper) paper.volume = 1.0; 
-            if(cello) cello.volume = 0.8;
+            if(paper) paper.volume = 1.0; // Suara kertas jelas
+            if(cello) cello.volume = 0.8; // Suara cello lembut
 
-            // Strategi "Mainkan Keduanya"
-            // 1. Coba mainkan Kertas dulu (efek instan saat buka halaman)
+            // 1. Putar Kertas (Efek Halaman Terbuka) di semua halaman
             if(paper) {
                 paper.play().catch(() => console.log("Audio kertas menunggu interaksi"));
             }
 
-            // 2. Coba mainkan Cello (atmosfer)
+            // 2. Putar Cello HANYA jika elemennya ada (artinya sedang di Beranda)
             if(cello) {
                 let celloPromise = cello.play();
                 if (celloPromise !== undefined) {
                     celloPromise.catch(() => {
                         // Jika autoplay diblokir, pasang jebakan interaksi
                         const enableAudio = () => {
-                            // Mainkan cello
                             cello.play();
-                            // Mainkan kertas juga (agar user tau efeknya)
+                            // Ulangi kertas juga agar efeknya terasa
                             if(paper) { paper.currentTime = 0; paper.play(); }
                             
-                            // Hapus listener
                             ['click', 'keydown', 'touchstart'].forEach(evt => 
                                 window.removeEventListener(evt, enableAudio)
                             );
@@ -245,8 +257,10 @@
             if(btn) { 
                 if (document.body.classList.contains('dyslexia-mode')) {
                     btn.classList.add('active');
+                    btn.innerHTML = '<span aria-hidden="true">✖️</span> Mode Normal';
                 } else {
                     btn.classList.remove('active');
+                    btn.innerHTML = '<span aria-hidden="true">👁️</span> Mode Baca Mudah';
                 }
             }
         }
@@ -255,7 +269,6 @@
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
-            
             document.getElementById("readingProgress").style.width = scrolled + "%";
 
             const backBtn = document.getElementById('backToTopBtn');
@@ -263,9 +276,7 @@
             else backBtn.classList.remove('visible');
         };
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         function calculateReadingTime() {
             const contentDiv = document.getElementById('contentToRead');
