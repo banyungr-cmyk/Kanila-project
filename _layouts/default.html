@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Banyu Kanila - Berbagi kisah lewat rangkaian aksara.">
+    <meta name="description" content="Blog Kanila - Tulisan penuh makna.">
     <title>{{ page.title }} | KANILA</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
@@ -15,12 +15,6 @@
             --accent-pink: #A65D6A;
             --border: #E0DED7;
             --selection-bg: #D4A5AF;
-            /* PENYESUAIAN KHUSUS HP (Mobile) */
-        @media (max-width: 600px) {
-            main { margin: 30px auto; padding: 0 20px; } /* Margin lebih tipis */
-            h1 { font-size: 2rem; } /* Ukuran judul sedikit mengecil agar pas */
-            header { padding: 20px 10px; } /* Header lebih ringkas */
-            .logo { font-size: 1.8rem; } /* Logo menyesuaikan */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -130,12 +124,21 @@
         .archive-title { text-decoration: none; color: var(--text-dark); font-weight: bold; font-size: 1.1rem; }
         .archive-date { color: var(--accent-pink); font-size: 0.9rem; font-style: italic; margin-left: 20px; min-width: 100px; text-align: right; }
 
-        /* Style Navigasi Tombol Next/Prev */
         .post-nav { display: flex; justify-content: space-between; margin-top: 80px; padding-top: 30px; border-top: 3px double var(--border); }
         .post-nav a { text-decoration: none; color: var(--accent-purple); font-weight: bold; max-width: 45%; border: 1px solid var(--border); padding: 15px; border-radius: 8px; font-size: 1rem; transition: transform 0.2s; }
         .post-nav a:hover { transform: translateY(-2px); background-color: rgba(116, 94, 141, 0.05); }
 
-        footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 80px; font-size: 0.9rem; color: #888; }
+        /* --- FOOTER YANG DISEMPURNAKAN --- */
+        footer { 
+            text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); 
+            margin-top: 80px; font-size: 0.9rem; color: #888; 
+            background: rgba(0,0,0,0.02); /* Sedikit lebih gelap dari kertas agar terpisah */
+        }
+        .footer-ornament { font-size: 1.5rem; color: var(--accent-purple); margin-bottom: 15px; display: block; }
+        .footer-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--text-dark); margin-bottom: 30px; }
+        .footer-links { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+        .footer-links a { text-decoration: none; color: var(--accent-pink); margin: 0 10px; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-purple); text-decoration: underline; }
 
         .back-to-top {
             position: fixed; bottom: 30px; right: 30px;
@@ -146,6 +149,17 @@
         }
         .back-to-top.visible { opacity: 1; pointer-events: auto; }
         .back-to-top:hover { transform: translateY(-3px); background: var(--accent-pink); }
+
+        /* OPTIMASI TAMPILAN HP (Mobile Friendly) */
+        @media (max-width: 600px) {
+            main { margin: 30px auto; padding: 0 20px; } 
+            h1 { font-size: 2rem; }
+            header { padding: 30px 10px; }
+            .logo { font-size: 1.8rem; }
+            nav a { margin: 0 8px; font-size: 0.8rem; } /* Jarak menu diperkecil di HP */
+            .post-nav { flex-direction: column; gap: 10px; text-align: center; } /* Navigasi Next/Prev jadi atas-bawah di HP */
+            .post-nav a { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -210,8 +224,17 @@
     </button>
 
     <footer>
-        <p>"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
-        <p>&copy; 2026 Banyu Kanila</p>
+        <span class="footer-ornament" aria-hidden="true">❧</span>
+        
+        <p class="footer-quote">"Lakukan semua dengan hati, maka akan sampai juga pada hati."</p>
+        
+        <div class="footer-links">
+            <a href="/">Beranda</a> • 
+            <a href="/arsip.html">Arsip</a> • 
+            <a href="/kontak.html">Sapa Saya</a>
+        </div>
+
+        <p>&copy; 2026 Banyu Kanila.</p>
     </footer>
 
     <script>
@@ -221,30 +244,23 @@
         });
 
         function playAtmosphere() {
-            // Cello mungkin null (tidak ada) jika bukan di beranda
             const cello = document.getElementById('introSound');
-            // Kertas selalu ada
             const paper = document.getElementById('paperSound');
 
-            if(paper) paper.volume = 1.0; // Suara kertas jelas
-            if(cello) cello.volume = 0.8; // Suara cello lembut
+            if(paper) paper.volume = 1.0;
+            if(cello) cello.volume = 0.5;
 
-            // 1. Putar Kertas (Efek Halaman Terbuka) di semua halaman
             if(paper) {
                 paper.play().catch(() => console.log("Audio kertas menunggu interaksi"));
             }
 
-            // 2. Putar Cello HANYA jika elemennya ada (artinya sedang di Beranda)
             if(cello) {
                 let celloPromise = cello.play();
                 if (celloPromise !== undefined) {
                     celloPromise.catch(() => {
-                        // Jika autoplay diblokir, pasang jebakan interaksi
                         const enableAudio = () => {
                             cello.play();
-                            // Ulangi kertas juga agar efeknya terasa
                             if(paper) { paper.currentTime = 0; paper.play(); }
-                            
                             ['click', 'keydown', 'touchstart'].forEach(evt => 
                                 window.removeEventListener(evt, enableAudio)
                             );
