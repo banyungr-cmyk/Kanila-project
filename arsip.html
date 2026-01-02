@@ -10,12 +10,21 @@ title: Arsip Tulisan
         "Jejak langkah yang pernah terlewati."
     </p>
 
+    {% assign all_posts = site.puisi | concat: site.opini | sort: 'date' | reverse %}
+
     <ul class="archive-list">
-        {% for post in site.posts %}
+        {% for post in all_posts %}
         <li class="archive-item">
-            <a href="{{ post.url }}" class="archive-title">{{ post.title }}</a>
+            <a href="{{ post.url }}" class="archive-title">
+                {{ post.title }} 
+                <small style="font-weight: normal; color: #888; font-size: 0.8em;">
+                    ({% if post.collection == 'puisi' %}Puisi{% else %}Opini{% endif %})
+                </small>
+            </a>
             <span class="archive-date">{{ post.date | date: "%d %b %Y" }}</span>
         </li>
+        {% else %}
+            <p style="text-align: center">Belum ada tulisan yang diarsipkan.</p>
         {% endfor %}
     </ul>
 </div>
