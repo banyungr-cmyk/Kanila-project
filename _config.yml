@@ -7,14 +7,14 @@ url: "https://kanila.web.id"
 markdown: kramdown
 highlighter: rouge
 
-# File yang diabaikan (tidak ikut di-upload/build)
+# File yang diabaikan
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
   - vendor/
 
-# Pengaturan Koleksi Tulisan (Cukup ditulis satu kali di sini)
+# Pengaturan Koleksi Tulisan
 collections:
   puisi:
     output: true
