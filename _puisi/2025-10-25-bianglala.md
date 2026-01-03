@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Bianglala"
-date: 2025-25-10
+date: 2025-10-25
 categories: puisi
 ---
 
