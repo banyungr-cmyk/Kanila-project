@@ -1,10 +1,8 @@
 ---
 layout: post
 title: "Jakarta: Antara Hujan, Mimpi, dan Realitas"
-date: 2026-01-03 18:00:00 +0700
-categories: Opini
-tags: [Jakarta, Commuting, Renungan]
-author: "Nama Penulis"
+date: 2026-01-03
+categories: opini
 ---
 
 Selamat sore dari Jakarta. Sebuah kota tempat jutaan manusia menggantungkan mimpinya. Ramai, riuh, dan tak pernah sepi di tiap sudut ibu kota ini.
