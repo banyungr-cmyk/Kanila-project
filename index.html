@@ -28,34 +28,34 @@ title: Beranda
     <section>
         <span class="section-title">Antologi Aksara</span>
         {% assign sorted_puisi = site.puisi | reverse %}
-{% for post in sorted_puisi limit:1 %}
-   {% endfor %}
-        <article class="post-preview">
-            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-            <div class="post-excerpt">
-                {{ post.content | strip_html | truncatewords: 25 }}
-            </div>
-            <a href="{{ post.url }}" class="read-more">Baca Puisi &rarr;</a>
-        </article>
+        
+        {% for post in sorted_puisi limit:1 %}
+            <article class="post-preview">
+                <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                <div class="post-excerpt">
+                    {{ post.content | strip_html | truncatewords: 25 }}
+                </div>
+                <a href="{{ post.url }}" class="read-more">Baca Puisi &rarr;</a>
+            </article>
         {% else %}
-        <p style="font-style: italic; color: #888;">Belum ada aksara yang terukir...</p>
+            <p style="font-style: italic; color: #888;">Belum ada aksara yang terukir...</p>
         {% endfor %}
     </section>
 
     <section>
         <span class="section-title">Celoteh</span>
         {% assign sorted_opini = site.opini | reverse %}
-{% for post in sorted_opini limit:1 %}
-   {% endfor %}
-        <article class="post-preview">
-            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-            <div class="post-excerpt">
-                {{ post.content | strip_html | truncatewords: 25 }}
-            </div>
-            <a href="{{ post.url }}" class="read-more">Baca Celoteh &rarr;</a>
-        </article>
+        
+        {% for post in sorted_opini limit:1 %}
+            <article class="post-preview">
+                <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                <div class="post-excerpt">
+                    {{ post.content | strip_html | truncatewords: 25 }}
+                </div>
+                <a href="{{ post.url }}" class="read-more">Baca Celoteh &rarr;</a>
+            </article>
         {% else %}
-        <p style="font-style: italic; color: #888;">Masih menunggu buah pikir...</p>
+             <p style="font-style: italic; color: #888;">Masih menunggu buah pikir...</p>
         {% endfor %}
     </section>
 </div>
