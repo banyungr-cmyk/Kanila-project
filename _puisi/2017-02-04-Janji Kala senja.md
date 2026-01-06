@@ -3,7 +3,7 @@ layout: post
 title: "Janji Kala senja"
 date: 2017-02-04
 categories: puisi
-spotify-id: "6I6zjBFpivJuCrPGJYIDDq"
+spotify_id: "6I6zjBFpivJuCrPGJYIDDq"
 ---
 
 Kutapaki sudah jalan setapak ini.
