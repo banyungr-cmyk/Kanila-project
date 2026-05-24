@@ -11,16 +11,20 @@ collections:
     label: "Celoteh"
     folder: "_opini"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
       - {label: "Judul", name: "title", widget: "string"}
+      - {label: "Tanggal", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Isi Tulisan", name: "body", widget: "markdown"}
 
   - name: "puisi"
     label: "Antologi Aksara"
     folder: "_puisi"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
       - {label: "Judul", name: "title", widget: "string"}
+      - {label: "Tanggal", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Isi Puisi", name: "body", widget: "markdown"}

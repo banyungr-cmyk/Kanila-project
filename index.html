@@ -4,6 +4,9 @@ title: Aksara
 ---
 
 <style>
+    /* Sembunyikan elemen khusus post di halaman beranda */
+    .meta-info, .post-tools, .post-nav { display: none !important; }
+
     .hero-section { text-align: center; padding: 60px 0; border-bottom: 1px double var(--border); margin-bottom: 60px; }
     .hero-section h2 { font-weight: normal; font-size: 2rem; color: var(--accent-purple); font-style: italic; }
     
@@ -14,7 +17,7 @@ title: Aksara
     .post-preview h3 { font-weight: normal; font-size: 1.6rem; margin: 10px 0; }
     .post-preview h3 a { text-decoration: none; color: var(--text-dark); transition: 0.3s; }
     .post-preview h3 a:hover { color: var(--accent-purple); }
-    .post-excerpt { color: #555; font-size: 1rem; line-height: 1.6; }
+    .post-excerpt { color: var(--text-dark); opacity: 0.7; font-size: 1rem; line-height: 1.6; }
     .read-more { display: inline-block; margin-top: 15px; font-size: 0.8rem; text-decoration: none; color: var(--accent-purple); font-weight: bold; text-transform: uppercase; }
 
     @media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; gap: 40px; } }

@@ -7,12 +7,17 @@ url: "https://kanila.web.id"
 markdown: kramdown
 highlighter: rouge
 
+# Plugin
+plugins:
+  - jekyll-sitemap
+
 # File yang diabaikan
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
   - vendor/
+  - "*.docx"
 
 # Pengaturan Koleksi Tulisan
 collections:

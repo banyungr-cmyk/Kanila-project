@@ -1,185 +1,71 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Banyu Kanila | KANILA</title>
-    <style>
-        :root {
-            --bg-paper: #FDFCF8;
-            --text-dark: #2C2C2C;
-            --accent-purple: #745E8D;
-            --accent-pink: #A65D6A;
-            --border: #E0DED7;
-        }
+---
+layout: default
+title: Di Balik Kanila
+---
 
-        body {
-            font-family: 'Georgia', serif;
-            background-color: var(--bg-paper);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            line-height: 1.8;
-            font-size: 1.15rem;
-        }
+<style>
+    /* Sembunyikan elemen khusus post di halaman statis */
+    .meta-info, .post-tools, .post-nav { display: none !important; }
 
-        /* Navigasi Skip */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--accent-purple);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            text-decoration: none;
-        }
-        .skip-link:focus { top: 0; }
+    .highlight {
+        color: var(--accent-purple);
+        font-weight: bold;
+    }
 
-        header {
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
+    .signature-section {
+        margin-top: 60px;
+        text-align: right;
+        border-top: 1px solid var(--border);
+        padding-top: 30px;
+    }
 
-        .logo {
-            font-size: 2rem;
-            letter-spacing: 0.2em;
-            text-decoration: none;
-            color: var(--text-dark);
-            text-transform: uppercase;
-        }
+    .quote {
+        font-style: italic;
+        color: var(--accent-pink);
+        font-size: 1.3rem;
+        display: block;
+        margin-bottom: 10px;
+    }
 
-        nav {
-            margin-top: 20px;
-        }
+    .signature {
+        font-family: 'Brush Script MT', 'Cursive', serif;
+        font-size: 2.2rem;
+        color: var(--text-dark);
+    }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin: 0 15px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .interests {
+        margin-top: 40px;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        color: #777;
+        text-align: center;
+        text-transform: uppercase;
+    }
 
-        /* Konten Utama */
-        article {
-            max-width: 750px;
-            margin: 60px auto;
-            padding: 0 25px;
-        }
+    .interests span {
+        margin: 0 10px;
+    }
 
-        h1 {
-            font-weight: normal;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: var(--accent-purple);
-            text-align: center;
-        }
+    @media (max-width: 600px) {
+        .signature-section { text-align: center; }
+    }
+</style>
 
-        p {
-            margin-bottom: 25px;
-            text-align: justify;
-        }
+<p>Mungkin kita belum pernah bertatap muka, namun di sini, melalui getaran aksara dan jalinan kode, saya ingin kita bertemu sebagai manusia. Saya <span class="highlight">Banyu Kanila</span>. Lahir di Cianjur pada 1997, saya tumbuh dengan keyakinan bahwa hidup bukan tentang seberapa jauh mata memandang, tapi tentang seberapa dalam hati meresapi.</p>
 
-        .highlight {
-            color: var(--accent-purple);
-            font-weight: bold;
-        }
+<p>Akademis membawa saya ke <strong>Universitas Muhammadiyah Sukabumi</strong>, di mana Sastra Inggris bukan sekadar gelar bagi saya, melainkan sebuah cara untuk memahami bahwa setiap kata memiliki denyut jantungnya sendiri. Bahasa adalah jembatan yang saya gunakan untuk melintasi sunyi, mengubah kegelisahan menjadi sajak, dan merangkai opini menjadi cermin bagi realita yang sering kali luput dari perhatian.</p>
 
-        /* Bagian Prinsip & Tanda Tangan */
-        .signature-section {
-            margin-top: 60px;
-            text-align: right;
-            border-top: 1px solid var(--border);
-            padding-top: 30px;
-        }
+<p>Keseharian saya saat ini banyak dihabiskan untuk merawat komunitas dan operasional di <strong>Kartunet</strong>. Sebagai <strong>Community &amp; Operations Lead</strong>, saya percaya bahwa teknologi seharusnya menjadi pelayan bagi kemanusiaan, bukan sebaliknya. Di balik interaksi digital ini, saya bekerja untuk memastikan bahwa setiap orang—apa pun kondisinya—memiliki hak yang sama untuk bersuara dan berdaya. Saya juga sempat berbagi pengetahuan sebagai trainer teknologi, karena bagi saya, ilmu yang tidak dibagikan adalah cahaya yang terperangkap dalam botol.</p>
 
-        .quote {
-            font-style: italic;
-            color: var(--accent-pink);
-            font-size: 1.3rem;
-            display: block;
-            margin-bottom: 10px;
-        }
+<p>Website ini adalah rumah kecil saya. Di sini, saya tidak ingin membebani Anda dengan banyak pilihan. Saya hanya ingin Anda duduk sebentar, menyesap satu <strong>Celoteh</strong> yang mungkin sedikit mengusik pikiran, atau merenungi satu <strong>Antologi Aksara</strong> yang mungkin mewakili perasaan Anda yang paling rahasia. Saya menyukai warna ungu yang tenang dan pink yang lembut, bukan karena ingin terlihat manis, tapi karena hidup butuh keseimbangan antara ketegasan dan kelembutan.</p>
 
-        .signature {
-            font-family: 'Brush Script MT', 'Cursive', serif;
-            font-size: 2.2rem;
-            color: var(--text-dark);
-        }
+<p>Jika Anda sampai di titik ini, berarti kita sudah sedikit bertukar energi. Saya lebih suka jika interaksi kita tidak berhenti di sini sebagai pembaca dan penulis saja. Mari menyapa saya di media sosial atau melalui pos-el. Sampaikan apa yang Anda rasakan setelah membaca sajak saya, atau tantang pemikiran saya jika Anda punya sudut pandang berbeda. Di sana, kita bisa berbicara sebagai kawan.</p>
 
-        /* Daftar Ketertarikan */
-        .interests {
-            margin-top: 40px;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            color: #777;
-            text-align: center;
-            text-transform: uppercase;
-        }
+<div class="signature-section">
+    <span class="quote">"Lakukan semua dengan hati, maka akan sampai juga pada hati."</span>
+    <span class="signature">Banyu Kanila</span>
+</div>
 
-        .interests span {
-            margin: 0 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            body { font-size: 1.1rem; }
-            .signature-section { text-align: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <a href="#main-content" class="skip-link">Loncati ke konten</a>
-
-    <header role="banner">
-        <a href="/" class="logo">KANILA</a>
-        <nav role="navigation" aria-label="Menu Utama">
-            <a href="/">Beranda</a>
-            <a href="/about">Tentang</a>
-            <a href="/kontak">Kontak</a>
-            <a href="/arsip">Arsip</a>
-        </nav>
-    </header>
-
-    <main id="main-content" role="main">
-        <article>
-            <h1>Di Balik Kanila</h1>
-
-            <p>Mungkin kita belum pernah bertatap muka, namun di sini, melalui getaran aksara dan jalinan kode, saya ingin kita bertemu sebagai manusia. Saya <span class="highlight">Banyu Kanila</span>. Lahir di Cianjur pada 1997, saya tumbuh dengan keyakinan bahwa hidup bukan tentang seberapa jauh mata memandang, tapi tentang seberapa dalam hati meresapi.</p>
-
-            <p>Akademis membawa saya ke <strong>Universitas Muhammadiyah Sukabumi</strong>, di mana Sastra Inggris bukan sekadar gelar bagi saya, melainkan sebuah cara untuk memahami bahwa setiap kata memiliki denyut jantungnya sendiri. Bahasa adalah jembatan yang saya gunakan untuk melintasi sunyi, mengubah kegelisahan menjadi sajak, dan merangkai opini menjadi cermin bagi realita yang sering kali luput dari perhatian.</p>
-
-            <p>Keseharian saya saat ini banyak dihabiskan untuk merawat komunitas dan operasional di <strong>Kartunet</strong>. Sebagai <strong>Community & Operations Lead</strong>, saya percaya bahwa teknologi seharusnya menjadi pelayan bagi kemanusiaan, bukan sebaliknya. Di balik interaksi digital ini, saya bekerja untuk memastikan bahwa setiap orang—apa pun kondisinya—memiliki hak yang sama untuk bersuara dan berdaya. Saya juga sempat berbagi pengetahuan sebagai trainer teknologi, karena bagi saya, ilmu yang tidak dibagikan adalah cahaya yang terperangkap dalam botol.</p>
-
-            <p>Website ini adalah rumah kecil saya. Di sini, saya tidak ingin membebani Anda dengan banyak pilihan. Saya hanya ingin Anda duduk sebentar, menyesap satu <strong>Celoteh</strong> yang mungkin sedikit mengusik pikiran, atau merenungi satu <strong>Antologi Aksara</strong> yang mungkin mewakili perasaan Anda yang paling rahasia. Saya menyukai warna ungu yang tenang dan pink yang lembut, bukan karena ingin terlihat manis, tapi karena hidup butuh keseimbangan antara ketegasan dan kelembutan.</p>
-
-            <p>Jika Anda sampai di titik ini, berarti kita sudah sedikit bertukar energi. Saya lebih suka jika interaksi kita tidak berhenti di sini sebagai pembaca dan penulis saja. Mari menyapa saya di media sosial atau melalui pos-el. Sampaikan apa yang Anda rasakan setelah membaca sajak saya, atau tantang pemikiran saya jika Anda punya sudut pandang berbeda. Di sana, kita bisa berbicara sebagai kawan.</p>
-
-            <div class="signature-section">
-                <span class="quote">"Lakukan semua dengan hati, maka akan sampai juga pada hati."</span>
-                <span class="signature">Banyu Kanila</span>
-            </div>
-
-            <div class="interests" aria-label="Minat dan Keahlian">
-                <span>Literature</span> • <span>Tech for Good</span> • <span>Minimalism</span> • <span>HR Development</span>
-            </div>
-        </article>
-    </main>
-
-    <footer role="contentinfo">
-        <p>&copy;© 2026 Banyu Kanila</p>
-    </footer>
-
-</body>
-</html>
+<div class="interests" aria-label="Minat dan Keahlian">
+    <span>Literature</span> • <span>Tech for Good</span> • <span>Minimalism</span> • <span>HR Development</span>
+</div>

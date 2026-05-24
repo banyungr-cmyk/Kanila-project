@@ -3,7 +3,7 @@ layout: post
 title: "Harap Terang"
 date: 2021-01-31
 categories: puisi
-  ---
+---
 
 Ranting telah kembali luruh.
 Melayang jatuh menuju bumi.

@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Banyu Kanila - Alunan aksara sampaikan cita.">
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
     <title>{{ page.title }} | KANILA</title>
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="{{ page.title }} | KANILA">
+    <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:site_name" content="KANILA">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ page.title }} | KANILA">
+    <meta name="twitter:description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='%23745E8D'>K</text></svg>">
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Prevent FOUC: apply dark mode before paint -->
+    <script>
+        (function() {
+            var saved = localStorage.getItem('kanila-theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     
     <style>
         :root {
@@ -17,8 +42,9 @@
             --selection-bg: #D4A5AF;
         }
 
+        /* Dark mode: system preference (hanya jika user belum pilih manual) */
         @media (prefers-color-scheme: dark) {
-            :root {
+            html:not([data-theme="light"]) {
                 --bg-paper: #1A1A1A;
                 --text-dark: #E0E0E0;
                 --accent-purple: #A294B5;
@@ -26,6 +52,16 @@
                 --border: #333333;
                 --selection-bg: #745E8D;
             }
+        }
+
+        /* Dark mode: manual toggle */
+        html[data-theme="dark"] {
+            --bg-paper: #1A1A1A;
+            --text-dark: #E0E0E0;
+            --accent-purple: #A294B5;
+            --accent-pink: #D4A5AF;
+            --border: #333333;
+            --selection-bg: #745E8D;
         }
 
         ::selection { background: var(--selection-bg); color: white; }
@@ -78,7 +114,7 @@
         }
         .skip-link:focus { top: 10px; }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: relative; }
         
         .logo { 
             font-family: 'Playfair Display', serif;
@@ -87,8 +123,18 @@
         }
         
         nav { margin-top: 20px; }
-        nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+        nav a { margin: 0 15px; text-decoration: none; color: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s; }
         nav a:focus { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
+        nav a.active { color: var(--accent-purple); border-bottom: 2px solid var(--accent-pink); padding-bottom: 4px; }
+
+        .theme-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: 1px solid var(--border); color: var(--text-dark);
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s; padding: 0;
+        }
+        .theme-toggle:hover { border-color: var(--accent-purple); background: rgba(116, 94, 141, 0.08); }
 
         main { max-width: 800px; margin: 60px auto; padding: 0 25px; min-height: 60vh; outline: none; }
         
@@ -156,9 +202,10 @@
             h1 { font-size: 2rem; }
             header { padding: 30px 10px; }
             .logo { font-size: 1.8rem; }
-            nav a { margin: 0 8px; font-size: 0.8rem; } /* Jarak menu diperkecil di HP */
-            .post-nav { flex-direction: column; gap: 10px; text-align: center; } /* Navigasi Next/Prev jadi atas-bawah di HP */
+            nav a { margin: 0 8px; font-size: 0.8rem; }
+            .post-nav { flex-direction: column; gap: 10px; text-align: center; }
             .post-nav a { max-width: 100%; }
+            .theme-toggle { top: 10px; right: 10px; width: 35px; height: 35px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -181,13 +228,16 @@
     </audio>
 
     <header role="banner">
-        <a href="/" class="logo" aria-label="Rumah Cinta">KANILA</a>
+        <a href="/" class="logo" aria-label="Beranda KANILA">KANILA</a>
         <nav role="navigation" aria-label="Navigasi Utama">
             <a href="/">Beranda</a>
             <a href="/arsip.html">Arsip</a>
             <a href="/about.html">Tentang</a>
             <a href="/kontak.html">Kontak</a>
         </nav>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Ubah mode gelap/terang">
+            <span id="themeIcon">🌙</span>
+        </button>
     </header>
 
     <main id="main-content" role="main" tabindex="-1">
@@ -295,15 +345,57 @@
             <a href="/kontak.html">Sapa Saya</a>
         </div>
 
-        <p>&copy; 2026 Banyu Kanila.</p>
+        <p>&copy; {{ site.time | date: '%Y' }} Banyu Kanila.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             playAtmosphere();
             calculateReadingTime();
+            highlightActiveNav();
+            updateThemeIcon();
         });
 
+        /* === DARK MODE TOGGLE === */
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const isDark = current === 'dark' || 
+                (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (isDark) {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('kanila-theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('kanila-theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme');
+            const isDark = theme === 'dark' || 
+                (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const icon = document.getElementById('themeIcon');
+            if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        /* === ACTIVE NAVIGATION === */
+        function highlightActiveNav() {
+            const path = window.location.pathname;
+            const links = document.querySelectorAll('nav[aria-label="Navigasi Utama"] a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if ((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+        }
+
+        /* === ATMOSFER AUDIO === */
         function playAtmosphere() {
             const cello = document.getElementById('introSound');
             const paper = document.getElementById('paperSound');
@@ -334,6 +426,7 @@
             }
         }
 
+        /* === DYSLEXIA MODE === */
         function toggleDyslexia() {
             document.body.classList.toggle('dyslexia-mode');
             const btn = document.getElementById('btnDyslexia');
@@ -348,6 +441,7 @@
             }
         }
 
+        /* === SCROLL PROGRESS & BACK TO TOP === */
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -361,6 +455,7 @@
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+        /* === READING TIME === */
         function calculateReadingTime() {
             const contentDiv = document.getElementById('contentToRead');
             if(contentDiv) {
@@ -372,6 +467,7 @@
             }
         }
 
+        /* === FONT SIZE === */
         let currentFontSize = 1.2;
         function changeFontSize(delta) {
             const contentDiv = document.getElementById('contentToRead');
@@ -383,6 +479,7 @@
             }
         }
 
+        /* === SHARE === */
         function sharePage() {
             if (navigator.share) {
                 navigator.share({ title: document.title, url: window.location.href }).catch(console.error);
